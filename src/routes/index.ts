@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import logger from "../util/logger";
 
+import AuthRoutes from "./auth";
+
 const router = express.Router();
 
 router.get("/", (Request, Response) => {
@@ -9,5 +11,7 @@ router.get("/", (Request, Response) => {
     message: "API is up and running"
   });
 });
+
+router.use("/auth", AuthRoutes);
 
 export default router;
