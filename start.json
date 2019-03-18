@@ -1,0 +1,10 @@
+{
+    "apps": [
+        {
+            "name": "buyanycaronline",
+            "script": "yarn",
+            "args": "start:prod",
+            "interpreter": "/bin/bash"
+        }
+    ]
+}
