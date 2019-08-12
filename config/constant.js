@@ -1,0 +1,1 @@
+module.exports.DATABASEURL = "https://anycaronline-8bf60.firebaseio.com";
