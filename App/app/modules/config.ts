@@ -1,6 +1,6 @@
 ﻿export class CommonService {
 
-    baseurl: string = "http://localhost:3000";
+    baseurl: string = "/api";
 
     motors   = [
         {

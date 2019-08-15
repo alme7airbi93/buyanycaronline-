@@ -18,14 +18,16 @@ const makeRoutes = require('./make.route');
 const vehicleRoutes = require('./vehicle.route');
 const modelRoutes = require('./model.route');
 const router = express.Router(); // eslint-disable-line
-
-router.use('/ads', adsRoutes);
-router.use('/cars',carsRoutes);
-router.use('/users',usersRoutes);
-router.use('/billinginfos',billinginfoRoutes);
-router.use('/makes',makeRoutes);
-router.use('/vehicles', vehicleRoutes);
-router.use('/models',modelRoutes);
+router.get('api/car-search',function(req,res){
+  res.json({success: true});
+})
+router.use('/api/ads', adsRoutes);
+router.use('/api/cars',carsRoutes);
+router.use('/api/api/users',usersRoutes);
+router.use('/api/billinginfos',billinginfoRoutes);
+router.use('/api/makes',makeRoutes);
+router.use('/api/vehicles', vehicleRoutes);
+router.use('/api/models',modelRoutes);
 
 // router.post('/ads', ads.create);
     

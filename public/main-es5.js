@@ -669,7 +669,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CommonService", function() { return CommonService; });
 var CommonService = /** @class */ (function () {
     function CommonService() {
-        this.baseurl = "http://localhost:3000";
+        this.baseurl = "/api";
         this.motors = [
             {
                 "id": "cars",
@@ -2525,7 +2525,7 @@ module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n\t<
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/admin/Downloads/buyanycaronline--master/Server/App/main.ts */"./App/main.ts");
+module.exports = __webpack_require__(/*! /Users/admin/Downloads/buyanycaronline--master/buyanycaronline_v_o.1/App/main.ts */"./App/main.ts");
 
 
 /***/ })
