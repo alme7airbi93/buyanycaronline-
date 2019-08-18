@@ -9,7 +9,8 @@ import { ManageAdComponent }    from './pages/manage-ad/manage-ad.component';
 import { CarSearchComponent }   from './pages/car-search/car-search.component';
 import { CarDetailComponent }   from './pages/car-detail/car-detail.component';
 import { MonitorPageComponent } from './pages/monitor-page/monitor-page.component';
-
+import {BoatSearchComponent} from './pages/boat-search/boat-search.component';
+import {BoatDetailComponent} from './pages/boat-detail/boat-detail.component';
 const routes: Routes = [
   { path: '',              component: IndexComponent},
   { path: 'user-profile/:user_id',  component: UserProfileComponent, canActivate: [AuthGuard] },
@@ -17,7 +18,9 @@ const routes: Routes = [
   { path: 'manage-ad/:ad_id', component: ManageAdComponent },
   { path: 'monitor-page',  component: MonitorPageComponent , canActivate: [AuthGuard]},
   { path: 'car-search',    component: CarSearchComponent},
-  { path: 'car-detail',    component: CarDetailComponent}
+  { path: 'car-detail',    component: CarDetailComponent},
+  {path:'boat-search',component: BoatSearchComponent},
+  {path:'boat-detail',component: BoatDetailComponent},
 ];
 
 @NgModule({

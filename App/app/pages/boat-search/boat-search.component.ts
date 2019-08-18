@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
-
-import { CarModel } from '../../modules/car.model';
-import { CarService } from '../../modules/car.service';
+import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 
 import { MakeModel } from '../../modules/make.model';
 import { MakeService } from '../../modules/make.service';
@@ -11,19 +8,19 @@ import { MakeService } from '../../modules/make.service';
 import { ModelService } from '../../modules/model.service';
 import { ModelModel } from '../../modules/model.model';
 import { CommonService } from '../../modules/config'
-
+import {BoatService} from '../../modules/boat.service';
+import { from } from 'rxjs';
 declare var $: any;
-
 @Component({
-  selector: 'app-car-search',
-  templateUrl: './car-search.component.html',
-  styleUrls: ['./car-search.component.css']
+  selector: 'app-boat-search',
+  templateUrl: './boat-search.component.html',
+  styleUrls: ['./boat-search.component.css']
 })
+export class BoatSearchComponent implements OnInit {
 
-export class CarSearchComponent implements OnInit {
-
-  car         : any;
-  cars        : any;
+  findForm: FormGroup;
+  submitted = false;
+  boats: any;
   makes       : MakeModel[];
   models      : ModelModel[];
   fromYears   : number[];
@@ -31,23 +28,17 @@ export class CarSearchComponent implements OnInit {
   fromPrices  : number[];
   toPrices    : number[];
   selectedMake: string;
-
-  findForm: FormGroup;
-  submitted = false;
-
   constructor(private formBuilder: FormBuilder,
-              private carService: CarService,
+              private boatService : BoatService,
               private makeService: MakeService,
               private modelService: ModelService,
-              private commonService : CommonService,
+              private commonService: CommonService,
               private route: ActivatedRoute,
               private router: Router) { }
   ngOnInit() {
-
     $('.loader').show();
     this.getAllMakes();
-
-    this.fromYears    = this.commonService.years;
+    this.fromYears = this.commonService.years;
     this.toYears      = this.commonService.years;
     this.fromPrices   = this.commonService.fromPrices;
     this.toPrices     = this.commonService.toPrices;
@@ -59,100 +50,80 @@ export class CarSearchComponent implements OnInit {
       toYear:     ['', Validators.required],
       fromPrice:  ['', Validators.required],
       toPrice:    ['', Validators.required],
-      orderid:    ['HIGHEST_PRICE', Validators.required]
+      orderid:    ['HIGHEST_PRICE', Validators.required],
+      lengthID: ['0,0',Validators.required]
     });
-
     let search_params = JSON.parse(localStorage.getItem("search_params"));
     localStorage.removeItem("search_params");
-
     if(!search_params) {
 
-      this.getAllCar();
+      this.getAllBoat();
 
     } else {
 
-      this.getSearchAllCarOnIndex(search_params);
+      this.getSearchAllBoatOnIndex(search_params);
 
     }
-
   }
-
-  getCarById(id : string){
-    this.carService.getCarById(id).subscribe(data=>{
-
-      this.car = data;
-
-    });
-  }
-
-  getAllCar(): void {
-    this.carService.getAllCar().subscribe(data=>{
+  getAllBoat(): void{
+    this.boatService.getAllBoat().subscribe(data=>{
 
       $('.loader').hide();
-      this.cars = data;
-      for(let i = 0; i < this.cars.length; i++) {
-        let imgArray =  this.cars[i].imgfiles; 
-        if (imgArray.length > 0)
-          this.cars[i].imgFile = imgArray[0];
-          console.log(imgArray[0]);
-        }
-    });
-  };
-
-  getAllMakes(): void {
-    this.makeService.getAllMakes().subscribe(data=>{
-
-      this.makes = data;
-      setTimeout("$('.selectpicker').selectpicker('refresh')", 0);
-
-    });
-  };
-
-  getModelByMakeId(make_id : string){
-    this.modelService.getAllModelByMakeId(make_id).subscribe(data=>{
-
-      this.models = data;
-      setTimeout("$('.selectpicker').selectpicker('refresh')", 0);
-
+      console.log(data);
+      this.boats = data;
+      // for(let i = 0; i < this.cars.length; i++) {
+      //   //let imgArray = JSON.parse(this.cars[i].imgfiles);
+      //   if (imgArray.length > 0)
+      //     this.cars[i].imgFile = this.commonService.baseurl + "/uploads/cars/" +  imgArray[0];
+      // }
     });
   }
-
-  getCarDetailById(car_id : string, ad_id : string){
-    localStorage.removeItem("car_id");
-    localStorage.setItem("car_id", car_id);
+  getSearchAllBoatOnIndex(params: any){
+    this.boatService.getSearchAllBoatOnIndex(params).subscribe((data) => {
+      $('.loader').hide();
+      this.boats = data;
+    })
+  }
+  async getAllMakes(){
+    await this.makeService.getAllMakes().subscribe(data => {
+      this.makes = data;
+      console.log(this.makes);
+      setTimeout("$('.selectpicker').selectpicker('refresh')", 0);
+    })
+  }
+  async getModelByMakeId(make_id : string){
+    await this.modelService.getAllModelByMakeId(make_id).subscribe(data=>{
+      this.models = data;
+      console.log(this.models);
+      setTimeout("$('.selectpicker').selectpicker('refresh')", 0);
+    });
+  }
+  getBoatDetailById(boat_id: string,ad_id:string){
+    console.log('clicked');
+    localStorage.removeItem("boat_id");
+    localStorage.setItem("boat_id", boat_id);
     localStorage.removeItem("ad_id");
     localStorage.setItem("ad_id", ad_id);
-    this.router.navigate(['car-detail']);
+    this.router.navigate(['boat-detail']);
   }
-
-  getSearchAllCarOnIndex(params: any){
-    this.carService.getSearchAllCarOnIndex(params).subscribe( data => {
-
-      $('.loader').hide();
-      this.cars = data;
-    });
-  }
-
-  onMakeChange(event:Event) {
-
+  onMakeChange(event: Event){
     const value:string = (<HTMLSelectElement>event.srcElement).value;
+    console.log(value);
     this.getModelByMakeId(value);
-
   }
-
+  onChangeSorted(event:Event){
+    const value:string = (<HTMLSelectElement>event.srcElement).value;
+    console.log(value);
+  }
   onSubmit(){
     this.submitted = true;
     $('.loader').show();
-
-    this.carService.getSearchAllCar(this.findForm.value)
+    console.log(this.findForm.value);
+    this.boatService.getAllSearchBoat(this.findForm.value)
     .subscribe( data => {
       $('.loader').hide();
-      this.cars = data;
+      this.boats = data;
+      console.log(this.boats)
     });
   }
-
-  // get the form short name to access the form fields
-  get f() { return this.findForm.controls; }
-
-
 }

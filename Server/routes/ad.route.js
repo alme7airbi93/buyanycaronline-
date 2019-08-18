@@ -22,7 +22,7 @@ router.get('/userid/:user_id', ads.findAllByUserId);
 router.put('/:id', ads.update);
 
 // Update to increase the Ad's visit count with id
-router.put('/ads/increase/:id', ads.increaseVisitCount);
+router.put('/increase/:id', ads.increaseVisitCount);
 
 // Delete a Ad with id
 router.delete('/:id', ads.delete);

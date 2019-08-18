@@ -12,4 +12,5 @@ export class CarModel {
     regionalspecs   : number;
     imgincrement    : number;
     imgfiles        : string;
+    imgbase64Encoded: string;
 }

@@ -1,7 +1,14 @@
 const express = require('express');
 const cars = require('../controllers/car.controller');
+const Multer = require("multer");
 const router = express.Router();
-    //Create a new Ca
+const multer = Multer({
+    storage: Multer.memoryStorage(),
+    limits: {
+    fileSize: 5 * 1024 * 1024 // no larger than 5mb, you can change as needed.
+    }
+});
+    //Create a new Car
     router.post('/', cars.create);
     // Retrieve all Cars
     // router.get('/',function(req, res){
@@ -36,5 +43,6 @@ const router = express.Router();
     router.delete('/vehicle/:id', cars.deleteByVehicleId);
 
     // Upload a Car image file
-    router.post('/upload/:car_id', cars.upload);
+    // router.post('/upload/:car_id',cars.upload);
+    router.post('/upload/:car_id',multer.single("file"),cars.upload);
     module.exports = router;

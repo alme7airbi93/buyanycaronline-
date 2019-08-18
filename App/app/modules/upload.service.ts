@@ -14,7 +14,7 @@ export class UploadService {
 
   SERVER_URL: string = this.commonService.baseurl + "/cars/upload/";
   
-  public upload(data, car_id) {
+  public upload(car_id,data) {
     let uploadURL = `${this.SERVER_URL}`;
     
     return this.httpClient.post<any>(uploadURL + car_id, data, {
@@ -35,5 +35,9 @@ export class UploadService {
       }
     })
     );
+  }
+  public upload1(data){
+    let uploadURL = `${this.SERVER_URL}`;
+    return this.httpClient.post<any>(uploadURL, data);
   }
 }

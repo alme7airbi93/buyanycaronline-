@@ -16,6 +16,8 @@ import { ManageAdComponent } from './pages/manage-ad/manage-ad.component';
 import { CarSearchComponent } from './pages/car-search/car-search.component';
 import { CarDetailComponent } from './pages/car-detail/car-detail.component';
 import { MonitorPageComponent } from './pages/monitor-page/monitor-page.component';
+import { BoatSearchComponent } from './pages/boat-search/boat-search.component';
+import { BoatDetailComponent } from './pages/boat-detail/boat-detail.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { MonitorPageComponent } from './pages/monitor-page/monitor-page.componen
     ManageAdComponent,
     CarSearchComponent,
     CarDetailComponent,
-    MonitorPageComponent
+    MonitorPageComponent,
+    BoatSearchComponent,
+    BoatDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -47,6 +47,11 @@ export class NewAdComponent implements OnInit {
   uploadForm    : FormGroup;
 
   imgFiles      : string[];
+  img_file: string;
+  // photos: string[];
+  exts: string[];
+  ext: string;
+  isPreview: boolean;
   previewImgFile: string;
 
   submitted = false;
@@ -75,7 +80,8 @@ export class NewAdComponent implements OnInit {
     this.transmissions= this.commonService.transmissions;
     this.colors       = this.commonService.colors;
     this.features     = this.commonService.features;
-
+    this.isPreview = false;
+    // this.photos = [];
     this.newForm = this.formBuilder.group({
       title:       ['', Validators.required],
       price:       ['', Validators.required],
@@ -96,7 +102,9 @@ export class NewAdComponent implements OnInit {
     this.user_id = this.route.snapshot.paramMap.get('user_id');
 
     let self = this;
-
+    // $("#uploadPhoto-box").css("display","block");
+    // $("#publishButton-container").css("display","block");
+    // $("#uploadPhotoBox-container").css("opacity","1");
     $(document).ready(function() {
 
       $("body").find("#newForm").submit(function(e) {
@@ -104,11 +112,9 @@ export class NewAdComponent implements OnInit {
         e.preventDefault();
         if (!self.onSaveSubmit())
           return;
-
-        $("#uploadPhoto-box").css("display","block");
-        $("#publishButton-container").css("display","block");
-        $("#uploadPhotoBox-container").css("opacity","1");
-
+          $("#uploadPhoto-box").css("display","block");
+          $("#publishButton-container").css("display","block");
+          $("#uploadPhotoBox-container").css("opacity","1");
         self.selFeatures = [];
         var index = 0;
         $('input[type="checkbox"]:checked').each(function() {
@@ -180,23 +186,34 @@ export class NewAdComponent implements OnInit {
 
   }
 
-  onFileChange(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
+  onFileChange($event) {
+    this.isPreview = true;
+    if ($event.target.files.length > 0) {
+      const file = $event.target.files[0];
+      console.log('file-data ',file);
+      let reader = new FileReader();
+      reader.onload = ($event:any) => {
+        this.previewImgFile = $event.target.result;
+        // this.photos.push(this.img_file);
+        // this.exts.push(ext);
+      }
+      reader.readAsDataURL(file);
       this.uploadForm.get('carimg').setValue(file);
     }
   }
 
   onUploadSubmit() {
     $('.loader').show();
+    console.log("-----");
     const formData = new FormData();
-
-    formData.append('file', this.uploadForm.get('carimg').value);
-
-    this.uploadService.upload(formData, this.car_id).subscribe(
+    formData.append('file',this.uploadForm.get('carimg').value);
+    this.uploadService.upload(this.car_id, formData).subscribe(
       data => {
         if(data.success == true) {
           $('.loader').hide();
+          console.log(data);
+          this.previewImgFile = data.filename;
+          console.log(this.previewImgFile);
           this.getCarAloneById(this.car_id);
         }
       }
@@ -233,7 +250,7 @@ export class NewAdComponent implements OnInit {
 
       imgFiles = JSON.parse(data.imgfiles);
       for(let i = 0; i < imgFiles.length; i++) {
-        this.imgFiles[i] = this.commonService.baseurl + "/uploads/cars/" + imgFiles[i];
+        this.imgFiles[i] = imgFiles[i];
         if(i == 0) this.previewImgFile = this.imgFiles[0];
       }
     });
@@ -276,7 +293,8 @@ export class NewAdComponent implements OnInit {
           fueltype     : this.newForm.value.fueltype,
           regionalspecs: 0,
           imgincrement : 0,
-          imgfiles     : '[]'
+          imgfiles     : '[]',
+          imgbase64Encoded: ''
         }
         this.addCar()
       });

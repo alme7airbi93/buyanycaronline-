@@ -2,44 +2,84 @@ var admin = require("firebase-admin");
 var db = admin.firestore();
 var date = require("../../config/date");
 const path = require('path');
-const fs = require('fs')
-
+const fs = require('fs');
 //Upload a image file
 exports.upload = (req, res) => {
+    let file = req.file;
+    let ext = path.extname(file.originalname);
+    let savedFilename = new Date().getTime() + '- car'+ ext;
+    let fileUpload = req.bucket.file('cars/'+savedFilename);
+    let download_url = uploadToFireStore(req, res,file, fileUpload);
     
-    let file = req.files.file;
-    let ext = path.extname(file.name);
-    
-    let car_id = req.params.car_id;
-    
-    db.collection('cars').doc(car_id).get()
-    .then((doc) => {
-        let data = doc.data();
+    // db.collection('cars').doc(car_id).get()
+    // .then((doc) => {
+    //     let data = doc.data();
+    // })
+    // db.collection('cars').doc(car_id).get()
+    // .then((doc) => {
+    //     let data = doc.data();
         
-        let imgincrement = data.imgincrement;
-        imgincrement++;
+    //     let imgincrement = data.imgincrement;
+    //     imgincrement++;
 
-        let filename = car_id + "-" + imgincrement + ext;
+    //     let filename = car_id + "-" + imgincrement + ext;
 
-        let imgfiles = [];
-        imgfiles = JSON.parse(data.imgfiles);
-        imgfiles.push(filename);
+    //     let imgfiles = [];
+    //     imgfiles = JSON.parse(data.imgfiles);
+    //     imgfiles.push(filename);
 
   
-        file.mv("public/uploads/cars/" + filename, function(err, success) {
-            let car = {};
-            car.imgincrement = imgincrement;
-            car.imgfiles = JSON.stringify(imgfiles);
-            let doc = db.collection("cars").doc(car_id);
-            doc.update(car)
+    //     file.mv("uploads/cars/" + filename, function(err, success) {
+    //         let car = {};
+    //         car.imgincrement = imgincrement;
+    //         car.imgfiles = JSON.stringify(imgfiles);
+    //         let doc = db.collection("cars").doc(car_id);
+    //         doc.update(car)
 
-            return res.json({success:true, filename:filename});
-        });
+    //         return res.json({success:true, filename:filename});
+    //     });
         
-    });
+    // });
 
 };
-
+async function uploadToFireStore(req,res,file, fileUpload) {
+    let downloadURL ;
+    if(!file) {
+        return;
+      }
+      await fileUpload.save(new Buffer(file.buffer)).then(  
+        result => {
+          console.log("res   ",result);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+      await fileUpload.getSignedUrl({
+        action: 'read',
+        expires: '03-09-2491'
+      }).then(signedUrls => {
+        downloadURL = signedUrls[0];
+        console.log("------------------");
+        console.log(downloadURL);
+        let car_id = req.params.car_id;
+        db.collection('cars').doc(car_id).get()
+        .then((doc) => {
+            let data = doc.data();
+            let imgincrement = data.imgincrement;
+            imgincrement++;
+            let imgfiles = [];
+            imgfiles = JSON.parse(data.imgfiles);
+            imgfiles.push(downloadURL);
+            let car = {};
+            car.imgfiles = imgfiles;
+            car.imgincrement = imgincrement;
+            let carDoc = db.collection('cars').doc(car_id);
+            carDoc.update(car);
+            res.json({success:true,filename:downloadURL});
+        })
+      });
+}
 //Create new car
 exports.create = (req, res) => {
     // Create a car
@@ -92,7 +132,6 @@ exports.findAll = async (req, res) => {
 
         let car = carDoc.data();
         let car_id = car.id;
-        
         let vehicleSnaps = await db.collection('vehicles').where('id', '==', car.vehicle_id).get();
         
         let vehicleArray = [];
@@ -118,7 +157,7 @@ exports.findAll = async (req, res) => {
                 });
 
                 snaps[2].forEach((modelDoc) => {
-                    car.model = modelDoc.data().modelvalue;
+                    car.model = modelDoc.data().value;
                 });
 
                 car.id = car_id;
@@ -234,7 +273,7 @@ exports.findOneByAdId = async (req, res) => {
                 });
 
                 snaps[2].forEach((modelDoc) => {
-                    car.model = modelDoc.data().modelvalue;
+                    car.model = modelDoc.data().value;
                 });
             });
         }
@@ -263,17 +302,19 @@ async function getAllByPrice(req, res, adSnaps) {
         let car = {};
 
         Object.assign(car, ad);
-
         let vehicleSnaps = await db.collection('vehicles').where('ad_id', '==', ad.id).get();
-        
+        let carSnaps = await db.collection('cars').get();
         let vehicleArray = [];
+        let carArray = [];
+        carSnaps.forEach(function(doc){
+            carArray.push(doc);
+        });
         vehicleSnaps.forEach(function(doc) {vehicleArray.push(doc);});
-        
+        console.log(vehicleArray.length);
+        console.log(carArray.length);
         for(const vehicleDoc of vehicleArray) {
-
             let vehicle = vehicleDoc.data();
             Object.assign(car, vehicle);
-
             await Promise.all([
                 db.collection('cars').where('vehicle_id', '==', vehicle.id).get(),
                 db.collection('makes').where('id', '==', vehicle.make_id).get(),
@@ -289,7 +330,7 @@ async function getAllByPrice(req, res, adSnaps) {
                 });
 
                 snaps[2].forEach((modelDoc) => {
-                    car.model = modelDoc.data().modelvalue;
+                    car.model = modelDoc.data().value;
                 });
                 
                 if ((make_id   == "" || make_id   == car.make_id )  && 
@@ -353,7 +394,7 @@ async function getAllByYear(req, res, vehicleSnaps) {
                 });
 
                 snaps[2].forEach((modelDoc) => {
-                    car.model = modelDoc.data().modelvalue;
+                    car.model = modelDoc.data().value;
                 });
                 
                 if ((make_id   == "" || make_id   == car.make_id )  && 
