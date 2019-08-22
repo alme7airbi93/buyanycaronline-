@@ -96,19 +96,28 @@ export class MonitorPageComponent implements OnInit {
   getCarByAdId(ad_id : string){
     this.carService.getCarByAdId(ad_id).subscribe((data:any)=>{
       this.car = data;
-
+      console.log(data);
       let imgFiles = [];
       this.imgFiles = [];
       this.previewImgFile = "";
-
-      imgFiles = JSON.parse(data.imgfiles);
-      for(let i = 0; i < imgFiles.length; i++) {
-        this.imgFiles[i] = this.commonService.baseurl + "/uploads/cars/" + imgFiles[i];
-        if(i == 0) this.previewImgFile = this.imgFiles[0];
+      imgFiles = data.imgfiles;
+      if(undefined!=imgFiles){
+        for(let i = 0; i < imgFiles.length; i++) {
+          this.imgFiles[i] = imgFiles[i];
+          if(i == 0) this.previewImgFile = this.imgFiles[0];
+        }
       }
-
-      this.features = JSON.parse(data.features);
+      if(undefined!=data.features){
+        this.features = JSON.parse(data.features);
+      }
     });
+  }
+
+  approveAd(ad: AdModel){
+    console.log('--approve--');
+    this.adService.approveAd(ad.id).subscribe(data=>{
+
+    })
   }
 
   deleteAd(ad: AdModel){

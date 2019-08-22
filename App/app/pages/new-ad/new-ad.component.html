@@ -21,7 +21,8 @@
 								<div class="hf-label" style="">PRICE</div>
 								<input formControlName = "price" class = "form-control ad-input" type = "number" [ngClass]="{ 'is-invalid': submitted && fNew.price.errors }" placeholder = "Enter price"/>
 								<div *ngIf="submitted && fNew.price.errors" class="invalid-feedback">
-									<div *ngIf="fNew.price.errors.required">Price is only required number</div>
+									<div *ngIf="fNew.price.errors.min">Price is only required positive number</div>
+									<div *ngIf="fNew.price.errors.required">Price is required </div>
 								</div>
 							</div>
 							<div class="col-md-12 col-sm-12">
@@ -97,28 +98,49 @@
 								</div>
 							</div>
 							<div class="col-md-12 col-sm-12">
+								<div class="hf-label">TYPE
+								</div>
+								<div class="hf-select">
+									<select class="form-control selectpicker " title="SELECT TYPE" data-width="100%" (change)= "changeTypes($event)">
+										<option *ngFor="let type of types" [value]="type.value" >{{type.value}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-12 col-sm-12" [hidden]="inputType!='BOAT'">
+								<div class="hf-label">LENGTH</div>
+								<div class="hf-select">
+									<select formControlName = "length" class="form-control selectpicker" [ngClass]="{ 'is-invalid': submitted && fNew.length.errors }" title="SELECT LENGTH" data-width="100%">
+										<option *ngFor="let length of lengths" [value]="length.id" >{{length.length}}</option>
+									</select>
+									<div *ngIf="submitted && fNew.length.errors" class="invalid-feedback">
+										<div *ngIf="fNew.length.errors.required&&inputType=='BOAT'">Length is required</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 col-sm-12" [hidden]="inputType!='CAR'">
 								<div class="hf-label">TRANSMISSION</div>
 								<div class="hf-select">
 									<select formControlName = "transmission" class="form-control selectpicker" [ngClass]="{ 'is-invalid': submitted && fNew.transmission.errors }" title="SELECT TRANSMISSION" data-width="100%">
 										<option *ngFor="let transmission of transmissions" [value]="transmission" >{{transmission}}</option>
 									</select>
 									<div *ngIf="submitted && fNew.transmission.errors" class="invalid-feedback">
-										<div *ngIf="fNew.transmission.errors.required">Transmission is required</div>
+										<div *ngIf="fNew.transmission.errors.required&&inputType=='CAR'">Transmission is required</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-12 col-sm-12">
+							<div class="col-md-12 col-sm-12" [hidden]="inputType!='CAR'">
 								<div class="hf-label">COLOR</div>
-								<div class="hf-select">
-									<select formControlName = "color" class="form-control selectpicker" [ngClass]="{ 'is-invalid': submitted && fNew.color.errors }" title="SELECT COLOR" data-width="100%">
-										<option *ngFor="let color of colors" [value]="color" >{{color}}</option>
-									</select>
-									<div *ngIf="submitted && fNew.color.errors" class="invalid-feedback">
-										<div *ngIf="fNew.color.errors.required">Color is required</div>
+									<div class="hf-select">
+										<select formControlName = "color" class="form-control selectpicker" [ngClass]="{ 'is-invalid': submitted && fNew.color.errors }" title="SELECT COLOR" data-width="100%">
+											<option *ngFor="let color of colors" [value]="color" >{{color}}</option>
+										</select>
+										<div *ngIf="submitted && fNew.color.errors&&inputType=='CAR'" class="invalid-feedback">
+											<div *ngIf="fNew.color.errors.required&&inputType=='CAR'">Color is required</div>
+										</div>
 									</div>
-								</div>
 							</div>
-							<div class="col-md-12 col-sm-12">
+								
+							<div class="col-md-12 col-sm-12" [hidden]="inputType!='CAR'">
 								<div class="hf-label">Features</div>
 								<label class="hf-checkbox" *ngFor="let feature of features">
 									<input type="checkbox" [value]="feature">{{feature}}
@@ -131,34 +153,41 @@
 					</div>
 				</div>
 			</form>
+			<app-alerts></app-alerts>
 			<div id="uploadPhotoBox-container" style = "display:block;">
 				<div id="uploadPhoto-box"  style = "display:block;">
 					<div style="border-bottom: 1px solid #2f3c40;">
 						<h2>Upload Photos</h2>
-						<div>
-							<form [formGroup]="uploadForm" (ngSubmit)="onUploadSubmit()">
-								<div class="custom-file col-md-8">
-									<input type="file" class="custom-file-input" name="carimg" (change)="onFileChange($event)">
-									<label class="custom-file-label" for="customFile">Choose file</label>
-								</div>
-								<button class="col-md-4 pt-2 uploadPhotoBox-uploadButton" type="submit">Upload</button>
-							</form>							
-						</div>
 					</div>
-					<div id="uploadPhotoBoxItem-container">
+					<!-- <div id="uploadPhotoBoxItem-container">
 						<div class="uploadPhotoBox-item" *ngFor = "let imgFile of imgFiles;">
 							<div class="uploadPhotoBox-image">
 								<img [src]="imgFile">
 							</div>
 							<button class="uploadPhotoBox-delete" (click) = "onDeleteSubmit(imgFile)" [attr.data-index]="i">Delete</button>
 						</div>
+					</div> -->
+					<div class="photo-array">
+						<div class="add-Photo">
+							<form [formGroup]="uploadForm">
+								<input type="file" name="carimg" (change)="onFileChange($event)"/>
+								<button class="add-Photo-btn"></button>
+							</form>
+						</div>
+						<!-- id="uploadPhotoBox-preview" -->
+						<div  class="exist-photo" *ngFor = "let item of img_arr">
+							<div class="close-btn">
+								<img src="../../../assets/img/Close.png" (click)="closeImage(item)"/>
+							</div>	
+							<img src="{{item.base64}}" class="preview-img">
+						</div>
 					</div>
-					<div id="uploadPhotoBox-preview">
-						<img  *ngIf="isPreview" src="{{previewImgFile}}">
-					</div>
+					
 				</div>
 				<div id="publishButton-container">
-					<button id="publishButton" (click) = "onPublishSubmit()">Publish</button>
+					<button class="col-md-4 uploadPhotoBox-uploadButton pt-2" [hidden] = "currentUser.type!='ADMIN'" (click) = "onPublishSubmit()">Publish</button>
+					<button class="col-md-4 uploadPhotoBox-uploadButton pt-2" [hidden] = "currentUser.type!='USER'" (click) = "onPublishSubmit()">User's Button</button>
+					<button class="col-md-4 uploadPhotoBox-uploadButton pt-2" (click) = "onUploadSubmit()">Upload</button>
 				</div>
 			</div>
 		</div>

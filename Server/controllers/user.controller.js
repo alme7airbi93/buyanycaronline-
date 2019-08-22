@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
             password        : bcrypt.hashSync(req.body.password, 10), 
             billinginfo_id  : billinginfo.id,
             message_id      : '',
-            type            : 'USER',
+            type            : 'USER',//ADMIN,CUSTOMER,MORDERTER
             create_at       : date.getDate(),
             update_at       : date.getDate()
         }

@@ -25,6 +25,7 @@
     "@types/bootstrap": "^4.3.0",
     "@types/bootstrap-select": "^1.11.1",
     "@types/jquery": "^3.3.29",
+    "angular-alert-module": "^2.0.3",
     "angular-selector": "^1.6.1",
     "bcrypt": "^3.0.6",
     "bcryptjs": "^2.4.3",

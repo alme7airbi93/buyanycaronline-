@@ -11,6 +11,6 @@ export class CarModel {
     fueltype        : number;
     regionalspecs   : number;
     imgincrement    : number;
-    imgfiles        : string;
+    imgfiles        : [];
     imgbase64Encoded: string;
 }

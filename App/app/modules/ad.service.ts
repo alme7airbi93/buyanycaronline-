@@ -15,7 +15,9 @@ export class AdService {
   getAdById(id: string){
     return this.http.get<AdModel>(this.commonService.baseurl + '/ads/' + id);
   }
-
+  getAdVehicleId(vehicle_id: string){
+    return this.http.get<AdModel>(this.commonService.baseurl+'/ads/vehicle_id' + vehicle_id);
+  }
   getAllAd(){
     return this.http.get<AdModel[]>(this.commonService.baseurl + '/ads');
   }
@@ -38,5 +40,8 @@ export class AdService {
 
   deleteAd(id: string){
     return this.http.delete(this.commonService.baseurl + '/ads/' + id);
+  }
+  approveAd(id: string){
+    return this.http.post(this.commonService.baseurl+ '/ads/approve',{id:id});
   }
 }

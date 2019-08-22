@@ -3,7 +3,6 @@ import { Router }             from "@angular/router";
 import { ActivatedRoute }     from "@angular/router";
 import { FormBuilder}         from "@angular/forms";
 import { FormGroup}           from "@angular/forms";
-
 import { AdModel }            from '../../modules/ad.model';
 import { AdService }          from '../../modules/ad.service';
 import { VehicleModel }       from '../../modules/vehicle.model';
@@ -15,7 +14,7 @@ import { MakeService }        from '../../modules/make.service';
 import { ModelService }       from '../../modules/model.service';
 import { ModelModel }         from '../../modules/model.model';
 import { CommonService }      from '../../modules/config'
-
+import { AlertsService }         from 'angular-alert-module';
 declare var $: any;
 
 @Component({
@@ -43,7 +42,7 @@ export class ManageAdComponent implements OnInit {
 
   imgFiles      : string[];
   previewImgFile: string;
-
+  isNegative: boolean;
   constructor(private formBuilder: FormBuilder,
               private adService: AdService,
               private vehicleService: VehicleService,
@@ -52,7 +51,8 @@ export class ManageAdComponent implements OnInit {
               private modelService  : ModelService,
               private commonService : CommonService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private alerts: AlertsService) { }
   ngOnInit() {
 
     this.car = {};
@@ -63,7 +63,7 @@ export class ManageAdComponent implements OnInit {
     this.transmissions= this.commonService.transmissions;
     this.colors       = this.commonService.colors;
     this.features     = this.commonService.features;
-
+    this.isNegative = false;
     let ad_id = this.route.snapshot.paramMap.get('ad_id');
     this.getCarByAdId(ad_id);
     this.getAllMakes();
@@ -76,12 +76,20 @@ export class ManageAdComponent implements OnInit {
 
         var fname = $(this).attr('id');
         var fvalue = $(this).val();
-
-        $(this).parent("div").prev().find("a").text(fvalue);
-
+        var prev_fvalue = $(this).parent("div").prev().find("a").text();
         $(".fa-check").click();
-
-        if( fname == 'title' || fname == 'price' || fname == 'description') {
+        if(fname == 'price'){
+          if(fvalue<0){
+            self.isNegative = true;
+            $(this).parent("div").prev().find("a").text(prev_fvalue);
+          }else{
+            var id = $("#ad_id").val();
+            $(this).parent("div").prev().find("a").text(fvalue);
+            self.updateAd(id, fname, fvalue);
+          }
+        }
+        if( fname == 'title' || fname == 'description') {
+          $(this).parent("div").prev().find("a").text(fvalue);
           var id = $("#ad_id").val();
           self.updateAd(id, fname, fvalue);
         }
@@ -133,10 +141,6 @@ export class ManageAdComponent implements OnInit {
         $(this).parent("div").prev().addClass("d-block");
       })
 
-      $(".PhotoBox-image").click(function() {
-        $("#PhotoBox-preview").html($(this).html());
-      });
-
       $(".PhotoBox-delete").click(function() {
         $(this).parent(".PhotoBox-item").css('display', 'none');
       });
@@ -156,8 +160,7 @@ export class ManageAdComponent implements OnInit {
   }
 
   onDeleteSubmit(imgFile:string){
-    let pathArray = imgFile.split("/");
-    let imgFileName = pathArray[pathArray.length - 1];
+    let imgFileName = imgFile;
 
     this.carService.updateCarImageById(this.car_id, imgFileName)
       .subscribe( (data) => {
@@ -166,12 +169,20 @@ export class ManageAdComponent implements OnInit {
   }
 
   onPublishSubmit() {
-    this.adService.updateAd(this.car.ad_id, 'publish', 'true').subscribe(
-      data => {
-      }
-    );
+    if(this.car.approve == 0){
+      console.log('couldnt publish');
+      this.alerts.setMessage("Can't publish before be approved.",'error');
+    }else{
+      this.adService.updateAd(this.car.ad_id, 'publish', 'true').subscribe(
+        data => {
+        }
+      );
+    }
+    
   }
-
+  changePreview(imgFile:string){
+    this.previewImgFile = imgFile;
+  }
   getAllMakes(): void {
     this.makeService.getAllMakes().subscribe(data=>{
 
@@ -191,22 +202,22 @@ export class ManageAdComponent implements OnInit {
     this.carService.getCarByAdId(ad_id).subscribe((data:any)=>{
       this.car = data;
       this.car_id = data.id;
+      console.log(data);
       this.getCarAloneById(this.car_id);
     });
   }
 
   getCarAloneById(car_id:string) {
+    console.log("---*---");
     this.carService.getCarAloneById(car_id)
     .subscribe( (data:CarModel) => {
-      let imgFiles = [];
-      this.imgFiles = [];
+      this.imgFiles = data.imgfiles;
       this.previewImgFile = "";
-
-      imgFiles = JSON.parse(data.imgfiles);
-      for(let i = 0; i < imgFiles.length; i++) {
-        this.imgFiles[i] = this.commonService.baseurl + "/uploads/cars/" + imgFiles[i];
-        if(i == 0) this.previewImgFile = this.imgFiles[0];
+      if(this.imgFiles.length>0){
+        this.previewImgFile = this.imgFiles[0];
       }
+      console.log(data.imgfiles.length);
+      this.imgFiles = data.imgfiles;
     });
   }
 

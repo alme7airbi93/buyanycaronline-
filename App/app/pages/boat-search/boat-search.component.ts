@@ -28,6 +28,7 @@ export class BoatSearchComponent implements OnInit {
   fromPrices  : number[];
   toPrices    : number[];
   selectedMake: string;
+  lengths:      any[];
   constructor(private formBuilder: FormBuilder,
               private boatService : BoatService,
               private makeService: MakeService,
@@ -42,7 +43,7 @@ export class BoatSearchComponent implements OnInit {
     this.toYears      = this.commonService.years;
     this.fromPrices   = this.commonService.fromPrices;
     this.toPrices     = this.commonService.toPrices;
-
+    this.lengths      =this.commonService.lengths;
     this.findForm = this.formBuilder.group({
       make:       ['', Validators.required],
       model:      ['', Validators.required],
@@ -71,11 +72,12 @@ export class BoatSearchComponent implements OnInit {
       $('.loader').hide();
       console.log(data);
       this.boats = data;
-      // for(let i = 0; i < this.cars.length; i++) {
-      //   //let imgArray = JSON.parse(this.cars[i].imgfiles);
-      //   if (imgArray.length > 0)
-      //     this.cars[i].imgFile = this.commonService.baseurl + "/uploads/cars/" +  imgArray[0];
-      // }
+      let imgArray:string[];
+      for(let i = 0; i < this.boats.length; i++) {
+        imgArray = this.boats[i].imgfiles;
+        if (undefined !== imgArray &&imgArray.length > 0)
+          this.boats[i].imgFile = imgArray[0];
+      }
     });
   }
   getSearchAllBoatOnIndex(params: any){

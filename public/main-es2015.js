@@ -175,12 +175,17 @@ let AppComponent = class AppComponent {
         this.authenticationService.login(this.fLogin.username.value, password)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["first"])())
             .subscribe((data) => {
+            console.log(data);
             $('.modal-dialog-loader').hide();
             $('#loginPopup').modal('toggle');
             if (data.type == 'ADMIN')
                 this.router.navigate(["/monitor-page"]);
-            else
+            else if (data.type == 'MORDERTER') {
                 this.router.navigate(['/user-profile/' + data.id]);
+            }
+            else {
+                this.router.navigate(['/user-profile/' + data.id]);
+            }
         }, err => {
             $('.modal-dialog-loader').hide();
             this.loginForm.controls["password"].setErrors({ incorrect: true });
@@ -275,17 +280,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app-routing.module */ "./App/app/app-routing.module.ts");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.component */ "./App/app/app.component.ts");
-/* harmony import */ var _modules_car_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/car.service */ "./App/app/modules/car.service.ts");
-/* harmony import */ var _modules_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/config */ "./App/app/modules/config.ts");
-/* harmony import */ var _pages_index_index_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/index/index.component */ "./App/app/pages/index/index.component.ts");
-/* harmony import */ var _pages_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/user-profile/user-profile.component */ "./App/app/pages/user-profile/user-profile.component.ts");
-/* harmony import */ var _pages_new_ad_new_ad_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/new-ad/new-ad.component */ "./App/app/pages/new-ad/new-ad.component.ts");
-/* harmony import */ var _pages_manage_ad_manage_ad_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/manage-ad/manage-ad.component */ "./App/app/pages/manage-ad/manage-ad.component.ts");
-/* harmony import */ var _pages_car_search_car_search_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pages/car-search/car-search.component */ "./App/app/pages/car-search/car-search.component.ts");
-/* harmony import */ var _pages_car_detail_car_detail_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./pages/car-detail/car-detail.component */ "./App/app/pages/car-detail/car-detail.component.ts");
-/* harmony import */ var _pages_monitor_page_monitor_page_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./pages/monitor-page/monitor-page.component */ "./App/app/pages/monitor-page/monitor-page.component.ts");
-/* harmony import */ var _pages_boat_search_boat_search_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./pages/boat-search/boat-search.component */ "./App/app/pages/boat-search/boat-search.component.ts");
-/* harmony import */ var _pages_boat_detail_boat_detail_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./pages/boat-detail/boat-detail.component */ "./App/app/pages/boat-detail/boat-detail.component.ts");
+/* harmony import */ var angular_alert_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! angular-alert-module */ "./node_modules/angular-alert-module/fesm2015/alerts.js");
+/* harmony import */ var _modules_car_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/car.service */ "./App/app/modules/car.service.ts");
+/* harmony import */ var _modules_config__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/config */ "./App/app/modules/config.ts");
+/* harmony import */ var _pages_index_index_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/index/index.component */ "./App/app/pages/index/index.component.ts");
+/* harmony import */ var _pages_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/user-profile/user-profile.component */ "./App/app/pages/user-profile/user-profile.component.ts");
+/* harmony import */ var _pages_new_ad_new_ad_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/new-ad/new-ad.component */ "./App/app/pages/new-ad/new-ad.component.ts");
+/* harmony import */ var _pages_manage_ad_manage_ad_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pages/manage-ad/manage-ad.component */ "./App/app/pages/manage-ad/manage-ad.component.ts");
+/* harmony import */ var _pages_car_search_car_search_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./pages/car-search/car-search.component */ "./App/app/pages/car-search/car-search.component.ts");
+/* harmony import */ var _pages_car_detail_car_detail_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./pages/car-detail/car-detail.component */ "./App/app/pages/car-detail/car-detail.component.ts");
+/* harmony import */ var _pages_monitor_page_monitor_page_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./pages/monitor-page/monitor-page.component */ "./App/app/pages/monitor-page/monitor-page.component.ts");
+/* harmony import */ var _pages_boat_search_boat_search_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./pages/boat-search/boat-search.component */ "./App/app/pages/boat-search/boat-search.component.ts");
+/* harmony import */ var _pages_boat_detail_boat_detail_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./pages/boat-detail/boat-detail.component */ "./App/app/pages/boat-detail/boat-detail.component.ts");
+
 
 
 
@@ -310,25 +317,26 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
         declarations: [
             _app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"],
-            _pages_index_index_component__WEBPACK_IMPORTED_MODULE_9__["IndexComponent"],
-            _pages_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_10__["UserProfileComponent"],
-            _pages_new_ad_new_ad_component__WEBPACK_IMPORTED_MODULE_11__["NewAdComponent"],
-            _pages_manage_ad_manage_ad_component__WEBPACK_IMPORTED_MODULE_12__["ManageAdComponent"],
-            _pages_car_search_car_search_component__WEBPACK_IMPORTED_MODULE_13__["CarSearchComponent"],
-            _pages_car_detail_car_detail_component__WEBPACK_IMPORTED_MODULE_14__["CarDetailComponent"],
-            _pages_monitor_page_monitor_page_component__WEBPACK_IMPORTED_MODULE_15__["MonitorPageComponent"],
-            _pages_boat_search_boat_search_component__WEBPACK_IMPORTED_MODULE_16__["BoatSearchComponent"],
-            _pages_boat_detail_boat_detail_component__WEBPACK_IMPORTED_MODULE_17__["BoatDetailComponent"]
+            _pages_index_index_component__WEBPACK_IMPORTED_MODULE_10__["IndexComponent"],
+            _pages_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_11__["UserProfileComponent"],
+            _pages_new_ad_new_ad_component__WEBPACK_IMPORTED_MODULE_12__["NewAdComponent"],
+            _pages_manage_ad_manage_ad_component__WEBPACK_IMPORTED_MODULE_13__["ManageAdComponent"],
+            _pages_car_search_car_search_component__WEBPACK_IMPORTED_MODULE_14__["CarSearchComponent"],
+            _pages_car_detail_car_detail_component__WEBPACK_IMPORTED_MODULE_15__["CarDetailComponent"],
+            _pages_monitor_page_monitor_page_component__WEBPACK_IMPORTED_MODULE_16__["MonitorPageComponent"],
+            _pages_boat_search_boat_search_component__WEBPACK_IMPORTED_MODULE_17__["BoatSearchComponent"],
+            _pages_boat_detail_boat_detail_component__WEBPACK_IMPORTED_MODULE_18__["BoatDetailComponent"]
         ],
         imports: [
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
             _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ReactiveFormsModule"]
+            _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ReactiveFormsModule"],
+            angular_alert_module__WEBPACK_IMPORTED_MODULE_7__["AlertsModule"].forRoot(),
         ],
         providers: [
-            _modules_car_service__WEBPACK_IMPORTED_MODULE_7__["CarService"],
-            _modules_config__WEBPACK_IMPORTED_MODULE_8__["CommonService"]
+            _modules_car_service__WEBPACK_IMPORTED_MODULE_8__["CarService"],
+            _modules_config__WEBPACK_IMPORTED_MODULE_9__["CommonService"]
         ],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]]
     })
@@ -487,6 +495,9 @@ let AdService = class AdService {
     getAdById(id) {
         return this.http.get(this.commonService.baseurl + '/ads/' + id);
     }
+    getAdVehicleId(vehicle_id) {
+        return this.http.get(this.commonService.baseurl + '/ads/vehicle_id' + vehicle_id);
+    }
     getAllAd() {
         return this.http.get(this.commonService.baseurl + '/ads');
     }
@@ -504,6 +515,9 @@ let AdService = class AdService {
     }
     deleteAd(id) {
         return this.http.delete(this.commonService.baseurl + '/ads/' + id);
+    }
+    approveAd(id) {
+        return this.http.post(this.commonService.baseurl + '/ads/approve', { id: id });
     }
 };
 AdService.ctorParameters = () => [
@@ -594,6 +608,9 @@ let BoatService = class BoatService {
         this.http = http;
         this.commonService = commonService;
     }
+    addBoat(boat) {
+        return this.http.post(this.commonService.baseurl + '/boats', boat);
+    }
     getAllBoat() {
         return this.http.get(this.commonService.baseurl + '/boats');
     }
@@ -602,6 +619,9 @@ let BoatService = class BoatService {
     }
     getBoatById(id) {
         return this.http.get(this.commonService.baseurl + '/boats/' + id);
+    }
+    getBoatAloneById(id) {
+        return this.http.get(this.commonService.baseurl + '/boats/alone/' + id);
     }
     getSearchAllBoatOnIndex(params) {
         return this.http.post(this.commonService.baseurl + '/boats/search-index', params);
@@ -740,6 +760,10 @@ class CommonService {
             "Fueltype1",
             "Fueltype2"
         ];
+        this.types = [
+            "Boat",
+            "Car",
+        ];
         this.conditions = [
             "Condition1",
             "Condition2"
@@ -768,6 +792,47 @@ class CommonService {
             100000,
             200000,
             500000
+        ];
+        this.lengths = [
+            {
+                "id": "0,10",
+                "length": "Under 10ft",
+            },
+            {
+                "id": "10,14",
+                "length": "10-14 ft",
+            },
+            {
+                "id": "15,19",
+                "length": "15-19 ft",
+            }, {
+                "id": "20,24",
+                "length": "20-24 ft",
+            },
+            {
+                "id": "25,29",
+                "length": "25-29 ft",
+            },
+            {
+                "id": "30,39",
+                "length": "30-39 ft",
+            },
+            {
+                "id": "40,49",
+                "length": "40-49 ft",
+            },
+            {
+                "id": "50,69",
+                "length": "50-69 ft",
+            },
+            {
+                "id": "70,100",
+                "length": "70-100 ft",
+            },
+            {
+                "id": "100,10000",
+                "length": "100+ ft",
+            }
         ];
     }
 }
@@ -895,6 +960,7 @@ let UploadService = class UploadService {
         this.httpClient = httpClient;
         this.commonService = commonService;
         this.SERVER_URL = this.commonService.baseurl + "/cars/upload/";
+        this.SERVER_URL_BOAT = this.commonService.baseurl + "/boats/upload/";
     }
     upload(car_id, data) {
         let uploadURL = `${this.SERVER_URL}`;
@@ -913,9 +979,22 @@ let UploadService = class UploadService {
             }
         }));
     }
-    upload1(data) {
-        let uploadURL = `${this.SERVER_URL}`;
-        return this.httpClient.post(uploadURL, data);
+    uploadBoatImage(boat_id, data) {
+        let uploadURL = `${this.SERVER_URL_BOAT}`;
+        return this.httpClient.post(uploadURL + boat_id, data, {
+            reportProgress: true,
+            observe: 'events'
+        }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((event) => {
+            switch (event.type) {
+                case _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpEventType"].UploadProgress:
+                    const progress = Math.round(100 * event.loaded / event.total);
+                    return { status: 'progress', message: progress };
+                case _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpEventType"].Response:
+                    return event.body;
+                default:
+                    return `Unhandled event: ${event.type}`;
+            }
+        }));
     }
 };
 UploadService.ctorParameters = () => [
@@ -1136,8 +1215,13 @@ let BoatDetailComponent = class BoatDetailComponent {
             this.boat = data;
             console.log("getBoatByid ", data);
             let imgFiles = [];
-            this.imgFiles = [];
-            this.previewImgFile = "";
+            for (let idx in data.imgfiles) {
+                imgFiles[idx] = data.imgfiles[idx];
+            }
+            this.imgFiles = imgFiles;
+            if (imgFiles.length > 0) {
+                this.previewImgFile = imgFiles[0];
+            }
         });
     }
     increaseVisitCount(ad_id) {
@@ -1226,6 +1310,7 @@ let BoatSearchComponent = class BoatSearchComponent {
         this.toYears = this.commonService.years;
         this.fromPrices = this.commonService.fromPrices;
         this.toPrices = this.commonService.toPrices;
+        this.lengths = this.commonService.lengths;
         this.findForm = this.formBuilder.group({
             make: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             model: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
@@ -1250,11 +1335,12 @@ let BoatSearchComponent = class BoatSearchComponent {
             $('.loader').hide();
             console.log(data);
             this.boats = data;
-            // for(let i = 0; i < this.cars.length; i++) {
-            //   //let imgArray = JSON.parse(this.cars[i].imgfiles);
-            //   if (imgArray.length > 0)
-            //     this.cars[i].imgFile = this.commonService.baseurl + "/uploads/cars/" +  imgArray[0];
-            // }
+            let imgArray;
+            for (let i = 0; i < this.boats.length; i++) {
+                imgArray = this.boats[i].imgfiles;
+                if (undefined !== imgArray && imgArray.length > 0)
+                    this.boats[i].imgFile = imgArray[0];
+            }
         });
     }
     getSearchAllBoatOnIndex(params) {
@@ -1428,9 +1514,9 @@ let CarDetailComponent = class CarDetailComponent {
             let imgFiles = [];
             this.imgFiles = [];
             this.previewImgFile = "";
-            imgFiles = JSON.parse(data.imgfiles);
+            imgFiles = data.imgfiles;
             for (let i = 0; i < imgFiles.length; i++) {
-                this.imgFiles[i] = this.commonService.baseurl + "/uploads/cars/" + imgFiles[i];
+                this.imgFiles[i] = imgFiles[i];
                 if (i == 0)
                     this.previewImgFile = this.imgFiles[0];
             }
@@ -1802,6 +1888,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_make_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../modules/make.service */ "./App/app/modules/make.service.ts");
 /* harmony import */ var _modules_model_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../modules/model.service */ "./App/app/modules/model.service.ts");
 /* harmony import */ var _modules_config__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../modules/config */ "./App/app/modules/config.ts");
+/* harmony import */ var angular_alert_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! angular-alert-module */ "./node_modules/angular-alert-module/fesm2015/alerts.js");
+
 
 
 
@@ -1814,7 +1902,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ManageAdComponent = class ManageAdComponent {
-    constructor(formBuilder, adService, vehicleService, carService, makeService, modelService, commonService, route, router) {
+    constructor(formBuilder, adService, vehicleService, carService, makeService, modelService, commonService, route, router, alerts) {
         this.formBuilder = formBuilder;
         this.adService = adService;
         this.vehicleService = vehicleService;
@@ -1824,6 +1912,7 @@ let ManageAdComponent = class ManageAdComponent {
         this.commonService = commonService;
         this.route = route;
         this.router = router;
+        this.alerts = alerts;
     }
     ngOnInit() {
         this.car = {};
@@ -1833,6 +1922,7 @@ let ManageAdComponent = class ManageAdComponent {
         this.transmissions = this.commonService.transmissions;
         this.colors = this.commonService.colors;
         this.features = this.commonService.features;
+        this.isNegative = false;
         let ad_id = this.route.snapshot.paramMap.get('ad_id');
         this.getCarByAdId(ad_id);
         this.getAllMakes();
@@ -1841,9 +1931,21 @@ let ManageAdComponent = class ManageAdComponent {
             $(".ba-input").change(function () {
                 var fname = $(this).attr('id');
                 var fvalue = $(this).val();
-                $(this).parent("div").prev().find("a").text(fvalue);
+                var prev_fvalue = $(this).parent("div").prev().find("a").text();
                 $(".fa-check").click();
-                if (fname == 'title' || fname == 'price' || fname == 'description') {
+                if (fname == 'price') {
+                    if (fvalue < 0) {
+                        self.isNegative = true;
+                        $(this).parent("div").prev().find("a").text(prev_fvalue);
+                    }
+                    else {
+                        var id = $("#ad_id").val();
+                        $(this).parent("div").prev().find("a").text(fvalue);
+                        self.updateAd(id, fname, fvalue);
+                    }
+                }
+                if (fname == 'title' || fname == 'description') {
+                    $(this).parent("div").prev().find("a").text(fvalue);
                     var id = $("#ad_id").val();
                     self.updateAd(id, fname, fvalue);
                 }
@@ -1884,9 +1986,6 @@ let ManageAdComponent = class ManageAdComponent {
                 $(this).parent("div").prev().removeClass("d-none");
                 $(this).parent("div").prev().addClass("d-block");
             });
-            $(".PhotoBox-image").click(function () {
-                $("#PhotoBox-preview").html($(this).html());
-            });
             $(".PhotoBox-delete").click(function () {
                 $(this).parent(".PhotoBox-item").css('display', 'none');
             });
@@ -1901,16 +2000,24 @@ let ManageAdComponent = class ManageAdComponent {
         this.getModelByMakeId(value);
     }
     onDeleteSubmit(imgFile) {
-        let pathArray = imgFile.split("/");
-        let imgFileName = pathArray[pathArray.length - 1];
+        let imgFileName = imgFile;
         this.carService.updateCarImageById(this.car_id, imgFileName)
             .subscribe((data) => {
             this.getCarAloneById(this.car_id);
         });
     }
     onPublishSubmit() {
-        this.adService.updateAd(this.car.ad_id, 'publish', 'true').subscribe(data => {
-        });
+        if (this.car.approve == 0) {
+            console.log('couldnt publish');
+            this.alerts.setMessage("Can't publish before be approved.", 'error');
+        }
+        else {
+            this.adService.updateAd(this.car.ad_id, 'publish', 'true').subscribe(data => {
+            });
+        }
+    }
+    changePreview(imgFile) {
+        this.previewImgFile = imgFile;
     }
     getAllMakes() {
         this.makeService.getAllMakes().subscribe(data => {
@@ -1927,21 +2034,21 @@ let ManageAdComponent = class ManageAdComponent {
         this.carService.getCarByAdId(ad_id).subscribe((data) => {
             this.car = data;
             this.car_id = data.id;
+            console.log(data);
             this.getCarAloneById(this.car_id);
         });
     }
     getCarAloneById(car_id) {
+        console.log("---*---");
         this.carService.getCarAloneById(car_id)
             .subscribe((data) => {
-            let imgFiles = [];
-            this.imgFiles = [];
+            this.imgFiles = data.imgfiles;
             this.previewImgFile = "";
-            imgFiles = JSON.parse(data.imgfiles);
-            for (let i = 0; i < imgFiles.length; i++) {
-                this.imgFiles[i] = this.commonService.baseurl + "/uploads/cars/" + imgFiles[i];
-                if (i == 0)
-                    this.previewImgFile = this.imgFiles[0];
+            if (this.imgFiles.length > 0) {
+                this.previewImgFile = this.imgFiles[0];
             }
+            console.log(data.imgfiles.length);
+            this.imgFiles = data.imgfiles;
         });
     }
     updateAd(id, fname, fvalue) {
@@ -1969,7 +2076,8 @@ ManageAdComponent.ctorParameters = () => [
     { type: _modules_model_service__WEBPACK_IMPORTED_MODULE_8__["ModelService"] },
     { type: _modules_config__WEBPACK_IMPORTED_MODULE_9__["CommonService"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+    { type: angular_alert_module__WEBPACK_IMPORTED_MODULE_10__["AlertsService"] }
 ];
 ManageAdComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1985,7 +2093,8 @@ ManageAdComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         _modules_model_service__WEBPACK_IMPORTED_MODULE_8__["ModelService"],
         _modules_config__WEBPACK_IMPORTED_MODULE_9__["CommonService"],
         _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"],
-        _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
+        angular_alert_module__WEBPACK_IMPORTED_MODULE_10__["AlertsService"]])
 ], ManageAdComponent);
 
 
@@ -2087,16 +2196,26 @@ let MonitorPageComponent = class MonitorPageComponent {
     getCarByAdId(ad_id) {
         this.carService.getCarByAdId(ad_id).subscribe((data) => {
             this.car = data;
+            console.log(data);
             let imgFiles = [];
             this.imgFiles = [];
             this.previewImgFile = "";
-            imgFiles = JSON.parse(data.imgfiles);
-            for (let i = 0; i < imgFiles.length; i++) {
-                this.imgFiles[i] = this.commonService.baseurl + "/uploads/cars/" + imgFiles[i];
-                if (i == 0)
-                    this.previewImgFile = this.imgFiles[0];
+            imgFiles = data.imgfiles;
+            if (undefined != imgFiles) {
+                for (let i = 0; i < imgFiles.length; i++) {
+                    this.imgFiles[i] = imgFiles[i];
+                    if (i == 0)
+                        this.previewImgFile = this.imgFiles[0];
+                }
             }
-            this.features = JSON.parse(data.features);
+            if (undefined != data.features) {
+                this.features = JSON.parse(data.features);
+            }
+        });
+    }
+    approveAd(ad) {
+        console.log('--approve--');
+        this.adService.approveAd(ad.id).subscribe(data => {
         });
     }
     deleteAd(ad) {
@@ -2167,10 +2286,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_ad_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../modules/ad.service */ "./App/app/modules/ad.service.ts");
 /* harmony import */ var _modules_vehicle_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../modules/vehicle.service */ "./App/app/modules/vehicle.service.ts");
 /* harmony import */ var _modules_car_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../modules/car.service */ "./App/app/modules/car.service.ts");
-/* harmony import */ var _modules_make_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../modules/make.service */ "./App/app/modules/make.service.ts");
-/* harmony import */ var _modules_model_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../modules/model.service */ "./App/app/modules/model.service.ts");
-/* harmony import */ var _modules_upload_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../modules/upload.service */ "./App/app/modules/upload.service.ts");
-/* harmony import */ var _modules_config__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../modules/config */ "./App/app/modules/config.ts");
+/* harmony import */ var _modules_boat_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../modules/boat.service */ "./App/app/modules/boat.service.ts");
+/* harmony import */ var _modules_make_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../modules/make.service */ "./App/app/modules/make.service.ts");
+/* harmony import */ var _modules_model_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../modules/model.service */ "./App/app/modules/model.service.ts");
+/* harmony import */ var _modules_upload_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../modules/upload.service */ "./App/app/modules/upload.service.ts");
+/* harmony import */ var _modules_config__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../modules/config */ "./App/app/modules/config.ts");
+/* harmony import */ var angular_alert_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! angular-alert-module */ "./node_modules/angular-alert-module/fesm2015/alerts.js");
+/* harmony import */ var _auth_authentication_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../auth/authentication.service */ "./App/app/auth/authentication.service.ts");
+
+
+
 
 
 
@@ -2184,11 +2309,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let NewAdComponent = class NewAdComponent {
-    constructor(formBuilder, adService, vehicleService, carService, makeService, modelService, uploadService, commonService, cdRef, route, router) {
+    constructor(formBuilder, adService, vehicleService, carService, boatService, makeService, modelService, uploadService, commonService, cdRef, route, router, auth, alerts) {
         this.formBuilder = formBuilder;
         this.adService = adService;
         this.vehicleService = vehicleService;
         this.carService = carService;
+        this.boatService = boatService;
         this.makeService = makeService;
         this.modelService = modelService;
         this.uploadService = uploadService;
@@ -2196,6 +2322,8 @@ let NewAdComponent = class NewAdComponent {
         this.cdRef = cdRef;
         this.route = route;
         this.router = router;
+        this.auth = auth;
+        this.alerts = alerts;
         this.submitted = false;
         this.uploadResponse = { status: '', message: '', filePath: '' };
     }
@@ -2207,28 +2335,46 @@ let NewAdComponent = class NewAdComponent {
         this.transmissions = this.commonService.transmissions;
         this.colors = this.commonService.colors;
         this.features = this.commonService.features;
+        this.types = this.commonService.motors;
+        this.isUploaded = false;
+        this.currentUser = this.auth.currentUserValue;
+        this.uploaded_img_arr = [];
+        this.inputType = "CAR";
+        this.lengths = this.commonService.lengths;
         // this.photos = [];
+        this.img_arr = [];
         this.newForm = this.formBuilder.group({
             title: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
-            price: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            price: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].min(0)]],
             description: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
             make_id: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
             model_id: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
-            color: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
-            transmission: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
             year: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
             fueltype: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
-            condition: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]
+            condition: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            length: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            transmission: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            color: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
         });
+        // this.carForm = this.formBuilder.group([
+        //   
+        // ]);
         this.uploadForm = this.formBuilder.group({
             carimg: ['']
         });
+        this.formData = new FormData();
         this.user_id = this.route.snapshot.paramMap.get('user_id');
         let self = this;
         // $("#uploadPhoto-box").css("display","block");
         // $("#publishButton-container").css("display","block");
         // $("#uploadPhotoBox-container").css("opacity","1");
         $(document).ready(function () {
+            console.log($(".photo-array").parent());
+            var width = $(".photo-array").parent().width();
+            $(".photo-array").css("width", width * 1.5 + 'px');
+            // $("#uploadPhoto-box").css("display","block");
+            // $("#publishButton-container").css("display","block");
+            // $("#uploadPhotoBox-container").css("opacity","1");
             $("body").find("#newForm").submit(function (e) {
                 e.preventDefault();
                 if (!self.onSaveSubmit())
@@ -2249,6 +2395,8 @@ let NewAdComponent = class NewAdComponent {
         });
     }
     get fNew() { return this.newForm.controls; }
+    get fBoat() { return this.newForm.get('boatForm'); }
+    get fCar() { return this.newForm.get('carForm'); }
     ngAfterViewInit() {
         $('.selectpicker').selectpicker('refresh');
     }
@@ -2269,9 +2417,50 @@ let NewAdComponent = class NewAdComponent {
         const value = event.srcElement.value;
         this.getModelByMakeId(value);
     }
+    changeTypes(event) {
+        console.log('-------');
+        this.inputType = event.srcElement.value;
+        console.log(this.inputType);
+        this.submitted = false;
+    }
+    customValidation() {
+        let pass = true;
+        console.log(this.newForm.controls);
+        var obj = this.newForm.controls;
+        const mapped = Object.keys(obj).map(key => ({ type: key, value: obj[key] }));
+        console.log(mapped);
+        for (let validated_item of mapped) {
+            if (this.inputType == "BOAT") {
+                if (validated_item.value.errors) {
+                    if (validated_item.type == "transmission" || validated_item.type == "color") {
+                        pass = true;
+                    }
+                    else {
+                        pass = false;
+                        break;
+                    }
+                }
+            }
+            if (this.inputType == "CAR") {
+                if (validated_item.value.errors) {
+                    if (validated_item.type == "length") {
+                        pass = true;
+                    }
+                    else {
+                        pass = false;
+                        break;
+                    }
+                }
+            }
+        }
+        console.log(pass);
+        return pass;
+    }
     onSaveSubmit() {
+        console.log(this.currentUser);
         this.submitted = true;
-        if (this.newForm.invalid) {
+        let isPassed = this.customValidation();
+        if (!isPassed) {
             setTimeout("$('.selectpicker').selectpicker('refresh')", 0);
             return false;
         }
@@ -2290,31 +2479,75 @@ let NewAdComponent = class NewAdComponent {
         this.addAd();
         return true;
     }
+    closeImage(item) {
+        console.log(item);
+        // this.img_arr.splice(item.idx, 1);
+        // console.log(this.img_arr);
+        var idx = this.img_arr.indexOf(item);
+        this.img_arr.splice(idx, 1);
+        this.formData.set('file', []);
+        if (item.isUploaded) {
+            this.onDeleteSubmit(item);
+            return;
+        }
+        for (let val of this.img_arr) {
+            this.formData.append('file', val.file);
+        }
+        // console.log(this.formData.getAll('file'));
+    }
     onFileChange($event) {
         if ($event.target.files.length > 0) {
             const file = $event.target.files[0];
             console.log('file-data ', file);
+            let reader = new FileReader();
+            reader.onload = ($event) => {
+                var obj = {
+                    file: file,
+                    base64: $event.target.result,
+                    isUploaded: false,
+                    imgPath: '',
+                };
+                this.img_arr.push(obj);
+            };
+            reader.readAsDataURL(file);
             this.uploadForm.get('carimg').setValue(file);
+            this.formData.append('file', this.uploadForm.get('carimg').value);
         }
     }
     onUploadSubmit() {
         $('.loader').show();
-        console.log("-----");
-        const formData = new FormData();
-        formData.append('file', this.uploadForm.get('carimg').value);
-        this.uploadService.upload(this.car_id, formData).subscribe(data => {
+        console.log(this.formData);
+        switch (this.inputType) {
+            case "CAR":
+                this.uploadCarImage();
+                break;
+            case "BOAT":
+                this.uploadBoatImage();
+                break;
+            default:
+                break;
+        }
+    }
+    uploadCarImage() {
+        this.uploadService.upload(this.car_id, this.formData).subscribe(data => {
             if (data.success == true) {
                 $('.loader').hide();
                 console.log(data);
-                this.previewImgFile = data.filename;
-                console.log(this.previewImgFile);
                 this.getCarAloneById(this.car_id);
             }
         });
     }
-    onDeleteSubmit(imgFile) {
-        let pathArray = imgFile.split("/");
-        let imgFileName = pathArray[pathArray.length - 1];
+    uploadBoatImage() {
+        this.uploadService.uploadBoatImage(this.boat_id, this.formData).subscribe(data => {
+            if (data.success == true) {
+                $('.loader').hide();
+                console.log(data);
+                //this.getBoatAloneById(this.boat_id);
+            }
+        });
+    }
+    onDeleteSubmit(item) {
+        let imgFileName = item.imgPath;
         this.carService.updateCarImageById(this.car_id, imgFileName)
             .subscribe((data) => {
             this.getCarAloneById(this.car_id);
@@ -2330,14 +2563,28 @@ let NewAdComponent = class NewAdComponent {
     getCarAloneById(car_id) {
         this.carService.getCarAloneById(car_id)
             .subscribe((data) => {
-            let imgFiles = [];
             this.imgFiles = [];
-            this.previewImgFile = "";
-            imgFiles = JSON.parse(data.imgfiles);
-            for (let i = 0; i < imgFiles.length; i++) {
-                this.imgFiles[i] = imgFiles[i];
-                if (i == 0)
-                    this.previewImgFile = this.imgFiles[0];
+            this.imgFiles = data.imgfiles;
+            this.formData.set('file', []);
+            var i = 0;
+            for (let item of this.img_arr) {
+                item.isUploaded = true;
+                item.imgPath = this.imgFiles[i];
+                i++;
+            }
+        });
+    }
+    getBoatAloneById(car_id) {
+        this.boatService.getBoatAloneById(car_id)
+            .subscribe((data) => {
+            this.imgFiles = [];
+            this.imgFiles = data.imgfiles;
+            this.formData.set('file', []);
+            var i = 0;
+            for (let item of this.img_arr) {
+                item.isUploaded = true;
+                item.imgPath = this.imgFiles[i];
+                i++;
             }
         });
     }
@@ -2361,29 +2608,62 @@ let NewAdComponent = class NewAdComponent {
     addVehicle() {
         this.vehicleService.addVehicle(this.vehicle)
             .subscribe((data) => {
-            this.car = {
-                id: '',
-                vehicle_id: data.id,
-                distance: '',
-                bodytype: 0,
-                doors: 0,
-                features: JSON.stringify(this.selFeatures),
-                horsepower: 0,
-                transmission: this.newForm.value.transmission,
-                color: this.newForm.value.color,
-                fueltype: this.newForm.value.fueltype,
-                regionalspecs: 0,
-                imgincrement: 0,
-                imgfiles: '[]',
-                imgbase64Encoded: ''
-            };
-            this.addCar();
+            switch (this.inputType) {
+                case "CAR":
+                    this.setCarData(data);
+                    this.addCar();
+                    break;
+                case "BOAT":
+                    this.setBoatData(data);
+                    this.addBoat();
+                    break;
+                default:
+                    this.addCar();
+                    break;
+            }
         });
+    }
+    setCarData(data) {
+        this.car = {
+            id: '',
+            vehicle_id: data.id,
+            distance: '',
+            bodytype: 0,
+            doors: 0,
+            features: JSON.stringify(this.selFeatures),
+            horsepower: 0,
+            transmission: this.newForm.value.transmission,
+            color: this.newForm.value.color,
+            fueltype: this.newForm.value.fueltype,
+            regionalspecs: 0,
+            imgincrement: 0,
+            imgfiles: [],
+            imgbase64Encoded: ''
+        };
+    }
+    setBoatData(data) {
+        this.boat = {
+            id: '',
+            vehicle_id: data.id,
+            type: '',
+            subtype: '',
+            hours: 0,
+            length: this.newForm.value.length,
+            imgincrement: 0,
+            imgfiles: [],
+        };
     }
     addCar() {
         this.carService.addCar(this.car)
             .subscribe((data) => {
             this.car_id = data.id;
+        });
+    }
+    addBoat() {
+        this.boatService.addBoat(this.boat)
+            .subscribe((data) => {
+            console.log(data);
+            this.boat_id = data.id;
         });
     }
 };
@@ -2392,13 +2672,16 @@ NewAdComponent.ctorParameters = () => [
     { type: _modules_ad_service__WEBPACK_IMPORTED_MODULE_4__["AdService"] },
     { type: _modules_vehicle_service__WEBPACK_IMPORTED_MODULE_5__["VehicleService"] },
     { type: _modules_car_service__WEBPACK_IMPORTED_MODULE_6__["CarService"] },
-    { type: _modules_make_service__WEBPACK_IMPORTED_MODULE_7__["MakeService"] },
-    { type: _modules_model_service__WEBPACK_IMPORTED_MODULE_8__["ModelService"] },
-    { type: _modules_upload_service__WEBPACK_IMPORTED_MODULE_9__["UploadService"] },
-    { type: _modules_config__WEBPACK_IMPORTED_MODULE_10__["CommonService"] },
+    { type: _modules_boat_service__WEBPACK_IMPORTED_MODULE_7__["BoatService"] },
+    { type: _modules_make_service__WEBPACK_IMPORTED_MODULE_8__["MakeService"] },
+    { type: _modules_model_service__WEBPACK_IMPORTED_MODULE_9__["ModelService"] },
+    { type: _modules_upload_service__WEBPACK_IMPORTED_MODULE_10__["UploadService"] },
+    { type: _modules_config__WEBPACK_IMPORTED_MODULE_11__["CommonService"] },
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+    { type: _auth_authentication_service__WEBPACK_IMPORTED_MODULE_13__["AuthenticationService"] },
+    { type: angular_alert_module__WEBPACK_IMPORTED_MODULE_12__["AlertsService"] }
 ];
 NewAdComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -2410,13 +2693,16 @@ NewAdComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         _modules_ad_service__WEBPACK_IMPORTED_MODULE_4__["AdService"],
         _modules_vehicle_service__WEBPACK_IMPORTED_MODULE_5__["VehicleService"],
         _modules_car_service__WEBPACK_IMPORTED_MODULE_6__["CarService"],
-        _modules_make_service__WEBPACK_IMPORTED_MODULE_7__["MakeService"],
-        _modules_model_service__WEBPACK_IMPORTED_MODULE_8__["ModelService"],
-        _modules_upload_service__WEBPACK_IMPORTED_MODULE_9__["UploadService"],
-        _modules_config__WEBPACK_IMPORTED_MODULE_10__["CommonService"],
+        _modules_boat_service__WEBPACK_IMPORTED_MODULE_7__["BoatService"],
+        _modules_make_service__WEBPACK_IMPORTED_MODULE_8__["MakeService"],
+        _modules_model_service__WEBPACK_IMPORTED_MODULE_9__["ModelService"],
+        _modules_upload_service__WEBPACK_IMPORTED_MODULE_10__["UploadService"],
+        _modules_config__WEBPACK_IMPORTED_MODULE_11__["CommonService"],
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
         _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"],
-        _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
+        _auth_authentication_service__WEBPACK_IMPORTED_MODULE_13__["AuthenticationService"],
+        angular_alert_module__WEBPACK_IMPORTED_MODULE_12__["AlertsService"]])
 ], NewAdComponent);
 
 
@@ -2726,7 +3012,7 @@ module.exports = "<head>\n  \n  <link rel=\"stylesheet\" href=\"https://stackpat
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"main-content-wrapper\">\n        <div class=\"container\" id=\"vd-container\">\n            <div class=\"row\">\n                <div id=\"vdBox-container\">\n                    <div id=\"vd-box\">\n                        <div id=\"vdHeader\">\n                            <div id=\"vdHeader-title\">{{boat.title}}</div>\n                            <div><span>Price: </span>{{boat.price | currency}}</div>\n                            <div><span>Created Date: </span>{{boat.year}}</div>\n                        <div id=\"vdViewedHeader\">\n                            <div><span>Viewed This: </span>{{boat.visitcount}}</div> \n                        </div>\n                    </div>\n                        \n                    <div id=\"vd-preview\">\n                        <div id=\"vd-previewImage\">\n                            <i id=\"vd-previewImageLeft\" class=\"fa fa-caret-left\" aria-hidden=\"true\"></i>\n                            <img *ngIf = \"previewImgFile\" [src] = \"previewImgFile\">\n                            <i id=\"vd-previewImageFullScreen\" class=\"fa fa-arrows-alt\" aria-hidden=\"true\"></i>\t\n                            <i id=\"vd-previewImageRight\" class=\"fa fa-caret-right\" aria-hidden=\"true\"></i>\n                        </div>\n                            <div id=\"vdPreviewItems\">\n                                <div class=\"vdItem-image\" *ngFor = \"let imgFile of imgFiles\">\n                                    <img [src]=\"imgFile\">\n                                </div>\n                            </div>\n                            <div id=\"vd-info\">\n                                <div id=\"vdInfo-innerLeft\">\t\t\t\t\t\n                                    <div><span>Make: </span>{{boat.make}}</div>\n                                    <div><span>Model: </span>{{boat.model}}</div>\n                                    <div><span>Year:</span>{{boat.year}}</div>\n                                    <div><span>Price:</span>{{boat.price | currency}}</div>\n                                    <div><span>Transmission:</span>{{boat.transmission}}</div>\n                                    <div><span>FuelType:</span>{{boat.fueltype}}\n                                </div>\n                                    </div>\n                                <div id=\"vdInfo-innerRight\">\n                                    <div><span>Description: </span>\n                                        {{boat.description}}\n                                    </div>\n                                    <div><span>Features: </span>\n                                        <br>\n                                        <ul *ngFor = \"let feature of features\">\n                                            <li>{{feature}}</li>\n                                        </ul>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <div id=\"imagePopupContainer\">\n        <div style=\"padding-top: 40px;\">\n            <i id=\"closeImagePopupContainer\" class=\"fa fa-times\" aria-hidden=\"true\"></i>\n            <img *ngIf = \"previewImgFile\" id=\"popupImage\" [src] = \"previewImgFile\">\n        </div>\n    </div>"
+module.exports = "\n<div class=\"main-content-wrapper\">\n        <div class=\"container\" id=\"vd-container\">\n            <div class=\"row\">\n                <div id=\"vdBox-container\">\n                    <div id=\"vd-box\">\n                        <div id=\"vdHeader\">\n                            <div id=\"vdHeader-title\">{{boat.title}}</div>\n                            <div><span>Price: </span>{{boat.price | currency}}</div>\n                            <div><span>Created Date: </span>{{boat.create_at}}</div>\n                        <div id=\"vdViewedHeader\">\n                            <div><span>Viewed This: </span>{{boat.visitcount}}</div> \n                        </div>\n                    </div>\n                        \n                    <div id=\"vd-preview\">\n                        <div id=\"vd-previewImage\">\n                            <i id=\"vd-previewImageLeft\" class=\"fa fa-caret-left\" aria-hidden=\"true\"></i>\n                            <img *ngIf = \"previewImgFile\" [src] = \"previewImgFile\">\n                            <i id=\"vd-previewImageFullScreen\" class=\"fa fa-arrows-alt\" aria-hidden=\"true\"></i>\t\n                            <i id=\"vd-previewImageRight\" class=\"fa fa-caret-right\" aria-hidden=\"true\"></i>\n                        </div>\n                            <div id=\"vdPreviewItems\">\n                                <div class=\"vdItem-image\" *ngFor = \"let imgFile of imgFiles\">\n                                    <img [src]=\"imgFile\">\n                                </div>\n                            </div>\n                            <div id=\"vd-info\">\n                                <div id=\"vdInfo-innerLeft\">\t\t\t\t\t\n                                    <div><span>Make: </span>{{boat.make}}</div>\n                                    <div><span>Model: </span>{{boat.model}}</div>\n                                    <div><span>Year:</span>{{boat.year}}</div>\n                                    <div><span>Price:</span>{{boat.price | currency}}</div>\n                                    <div><span>Transmission:</span>{{boat.transmission}}</div>\n                                    <div><span>FuelType:</span>{{boat.fueltype}}\n                                </div>\n                                    </div>\n                                <div id=\"vdInfo-innerRight\">\n                                    <div><span>Description: </span>\n                                        {{boat.description}}\n                                    </div>\n                                    <div><span>Features: </span>\n                                        <br>\n                                        <ul *ngFor = \"let feature of features\">\n                                            <li>{{feature}}</li>\n                                        </ul>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <div id=\"imagePopupContainer\">\n        <div style=\"padding-top: 40px;\">\n            <i id=\"closeImagePopupContainer\" class=\"fa fa-times\" aria-hidden=\"true\"></i>\n            <img *ngIf = \"previewImgFile\" id=\"popupImage\" [src] = \"previewImgFile\">\n        </div>\n    </div>"
 
 /***/ }),
 
@@ -2737,7 +3023,7 @@ module.exports = "\n<div class=\"main-content-wrapper\">\n        <div class=\"c
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-content-wrapper\">\n    <div class=\"container\" id=\"sr-container\">\n        <div class=\"loader\" style=\"display: block;\"></div>\n        <div class=\"row\">\n            <div id=\"findBox-container\">\n                <div id=\"find-box\">\n                    <h2>FIND</h2>\n                    <form [formGroup] = \"findForm\" (ngSubmit) = \"onSubmit()\">\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">MAKE</div>\n                            <div class=\"hf-select\">\n                                <select formControlName = \"make\" class=\"selectpicker\" (change) = \"onMakeChange($event)\" title=\"SELECT NAME\" data-width = \"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option *ngFor=\"let make of makes\" [value] = \"make.id\">{{make.value}}</option>\n                                </select>\n                            </div>\n                        </div>\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">MODEL</div>\n                            <div class=\"hf-select\">\n                                <select formControlName = \"model\" class=\"selectpicker\" title=\"SELECT MODEL\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option *ngFor=\"let model of models\" [value]=\"model.id\" >{{model.value}}</option>\n                                </select>\n                            </div>\n                        </div>\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">YEAR</div>\n                            <div class=\"hf-select half\">\n                                <select formControlName = \"fromYear\" class=\"selectpicker\" title=\"FROM\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option [value]=\"year\" *ngFor=\"let year of fromYears\">{{year}}</option>\n                                </select>\n                            </div>\n                            <div class=\"hf-select half\">\n                                <select formControlName = \"toYear\" class=\"selectpicker\" title=\"TO\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option [value]=\"year\" *ngFor=\"let year of toYears\">{{year}}</option>\n                                </select>\n                            </div>\n                        </div>\n\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">PRICE</div>\n                            <div class=\"hf-select half\">\n                                <select formControlName = \"fromPrice\" class=\"selectpicker\" title=\"FROM\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option [value]=\"price\" *ngFor=\"let price of fromPrices\">{{price}}</option>\n                                </select>\n                            </div>\n                            <div class=\"hf-select half\">\n                                <select formControlName = \"toPrice\" class=\"selectpicker\" title=\"TO\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option [value]=\"price\" *ngFor=\"let price of toPrices\">{{price}}</option>\n                                </select>\n                            </div>\n                        </div>\n\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">ORDER</div>\n                            <div class=\"hf-select\">\n                                <select formControlName = \"orderid\" class=\"selectpicker\" title=\"SELECT ORDER\" data-width=\"100%\">\n                                    <option value = \"HIGHEST_PRICE\">Highest Price</option>\n                                    <option value = \"LOWEST_PRICE\">Lowest Price</option>\n                                    <option value = \"NEWEST\">Newest</option>\n                                    <option value = \"OLDEST\">Oldest</option>\n                                </select>\n                            </div>\n                        </div>\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">LENGTH</div>\n                            <div class=\"hf-select\">\n                                <select formControlName = \"lengthID\" class=\"selectpicker\" title=\"SELECT LENGTH\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option value = \"0,10\">Under 10 ft</option>\n                                    <option value = \"10,14\">10-14 ft</option>\n                                    <option value = \"15,19\">15-19 ft</option>\n                                    <option value = \"20,24\">20-24 ft</option>\n                                    <option value = \"25,29\">25-29 ft</option>\n                                    <option value = \"30,39\">30-39 ft</option>\n                                    <option value = \"40,49\">40-49 ft</option>\n                                    <option value = \"50,69\">50-69 ft</option>\n                                    <option value = \"70,100\">70-100 ft</option>\n                                    <option value = \"100,10000\">100+ ft</option>\n                                </select>\n                            </div>\n                        </div>\n                        <div class=\"col-md-12 col-sm-12\">\n                            <button type=\"submit\" class=\"button\" id=\"hf-button\">Search</button>\n                        </div>\n                    </form>\n                </div>\n            </div>\n            <div id=\"searchResultsBox-container\">\n                    <div id=\"searchResults-box\">\n                            <div class=\"search-body\">\n                                    <h2 class=\"col-md-7 search-title\">Search Results</h2>\n                                    <div class=\"col-md-5 price-select\">\n                                            <span class=\"col-md-5 sortby\">Sort By: </span>\n                                            <div class=\"col-md-7\">\n                                                    <select class = \"orderPicker\" (change) = \"onChangeSorted($event)\" title=\"SELECT NAME\"  data-margin=\"auto\" data-width=\"80%\">\n                                                            <option value=\"0\">Highest Price</option>\n                                                            <option value=\"1\">Lowest Price</option>\n                                                            <option value=\"2\">Newest</option>\n                                                            <option value=\"3\">Oldest</option>\n                                                    </select>\n                                            </div>\n                                        </div>\n                            </div>\n                            <div class=\"searchResults-item\" *ngFor=\"let boat of boats\">\n                                    <div class=\"searchResult-image\">\n                                        <img [src]=\"\">\n                                    </div>\n                                    <div class=\"searchResult-info\">\n                                        <div>\n                                            <a (click)=\"getBoatDetailById(boat.id, boat.ad_id)\" class=\"searchResultInfo-title\"> {{boat.title}}</a>\n                                            <div class=\"searchResultInfo-price\"> {{boat.price|currency}}</div>\n                                        </div>\n                                        <div>\n                                            <div class=\"searchResult-info-inner1\">\n                                                <div><span>Make:{{boat.make}}</span> </div>\n                                                <div><span>Model:{{boat.model}}</span> </div>\n                                                <div><span>Length:</span>{{boat.length}} </div>\n                                            </div>\n                                            <div class=\"searchResult-info-inner2\">\n                                                <div><span>Fuel Type:</span>{{boat.fueltype}} </div>\n                                                <div><span>Condition:</span>{{boat.condition}} </div>\n                                                \n                                            </div>\n                                        </div>\n                                        <div class=\"searchResultInfo-date\"><span>Created Date:</span> {{boat.year}}</div>\n                                    </div>\n                                </div>\n                    </div>\n            </div>\n            <div id=\"adBox-container\">\n                    <div id=\"ad-box\">Empty block for ads</div>\n            </div>\n        </div>\n    </div>\n</div>\n"
+module.exports = "<div class=\"main-content-wrapper\">\n    <div class=\"container\" id=\"sr-container\">\n        <div class=\"loader\" style=\"display: block;\"></div>\n        <div class=\"row\">\n            <div id=\"findBox-container\">\n                <div id=\"find-box\">\n                    <h2>FIND</h2>\n                    <form [formGroup] = \"findForm\" (ngSubmit) = \"onSubmit()\">\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">MAKE</div>\n                            <div class=\"hf-select\">\n                                <select formControlName = \"make\" class=\"selectpicker\" (change) = \"onMakeChange($event)\" title=\"SELECT NAME\" data-width = \"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option *ngFor=\"let make of makes\" [value] = \"make.id\">{{make.value}}</option>\n                                </select>\n                            </div>\n                        </div>\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">MODEL</div>\n                            <div class=\"hf-select\">\n                                <select formControlName = \"model\" class=\"selectpicker\" title=\"SELECT MODEL\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option *ngFor=\"let model of models\" [value]=\"model.id\" >{{model.value}}</option>\n                                </select>\n                            </div>\n                        </div>\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">YEAR</div>\n                            <div class=\"hf-select half\">\n                                <select formControlName = \"fromYear\" class=\"selectpicker\" title=\"FROM\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option [value]=\"year\" *ngFor=\"let year of fromYears\">{{year}}</option>\n                                </select>\n                            </div>\n                            <div class=\"hf-select half\">\n                                <select formControlName = \"toYear\" class=\"selectpicker\" title=\"TO\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option [value]=\"year\" *ngFor=\"let year of toYears\">{{year}}</option>\n                                </select>\n                            </div>\n                        </div>\n\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">PRICE</div>\n                            <div class=\"hf-select half\">\n                                <select formControlName = \"fromPrice\" class=\"selectpicker\" title=\"FROM\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option [value]=\"price\" *ngFor=\"let price of fromPrices\">{{price}}</option>\n                                </select>\n                            </div>\n                            <div class=\"hf-select half\">\n                                <select formControlName = \"toPrice\" class=\"selectpicker\" title=\"TO\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option [value]=\"price\" *ngFor=\"let price of toPrices\">{{price}}</option>\n                                </select>\n                            </div>\n                        </div>\n\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">ORDER</div>\n                            <div class=\"hf-select\">\n                                <select formControlName = \"orderid\" class=\"selectpicker\" title=\"SELECT ORDER\" data-width=\"100%\">\n                                    <option value = \"HIGHEST_PRICE\">Highest Price</option>\n                                    <option value = \"LOWEST_PRICE\">Lowest Price</option>\n                                    <option value = \"NEWEST\">Newest</option>\n                                    <option value = \"OLDEST\">Oldest</option>\n                                </select>\n                            </div>\n                        </div>\n                        <div class=\"col-md-12 col-sm-12\">\n                            <div class=\"hf-label\">LENGTH</div>\n                            <div class=\"hf-select\">\n                                <select formControlName = \"lengthID\" class=\"selectpicker\" title=\"SELECT LENGTH\" data-width=\"100%\">\n                                    <option [value] = \"\"></option>\n                                    <option *ngFor=\"let length of lengths\" [value]=\"length.id\" >{{length.length}}</option>\n                                </select>\n                            </div>\n                        </div>\n                        <div class=\"col-md-12 col-sm-12\">\n                            <button type=\"submit\" class=\"button\" id=\"hf-button\">Search</button>\n                        </div>\n                    </form>\n                </div>\n            </div>\n            <div id=\"searchResultsBox-container\">\n                    <div id=\"searchResults-box\">\n                            <div class=\"search-body\">\n                                    <h2 class=\"col-md-7 search-title\">Search Results</h2>\n                                    <div class=\"col-md-5 price-select\">\n                                            <span class=\"col-md-5 sortby\">Sort By: </span>\n                                            <div class=\"col-md-7\">\n                                                    <select class = \"orderPicker\" (change) = \"onChangeSorted($event)\" title=\"SELECT NAME\"  data-margin=\"auto\" data-width=\"80%\">\n                                                            <option value=\"0\">Highest Price</option>\n                                                            <option value=\"1\">Lowest Price</option>\n                                                            <option value=\"2\">Newest</option>\n                                                            <option value=\"3\">Oldest</option>\n                                                    </select>\n                                            </div>\n                                        </div>\n                            </div>\n                            <div class=\"searchResults-item\" *ngFor=\"let boat of boats\">\n                                    <div class=\"searchResult-image\">\n                                        <img [src]=\"boat.imgFile\">\n                                    </div>\n                                    <div class=\"searchResult-info\">\n                                        <div>\n                                            <a (click)=\"getBoatDetailById(boat.id, boat.ad_id)\" class=\"searchResultInfo-title\"> {{boat.title}}</a>\n                                            <div class=\"searchResultInfo-price\"> {{boat.price|currency}}</div>\n                                        </div>\n                                        <div>\n                                            <div class=\"searchResult-info-inner1\">\n                                                <div><span>Make:{{boat.make}}</span> </div>\n                                                <div><span>Model:{{boat.model}}</span> </div>\n                                                <div><span>Length:</span>{{boat.length}} </div>\n                                            </div>\n                                            <div class=\"searchResult-info-inner2\">\n                                                <div><span>Fuel Type:</span>{{boat.fueltype}} </div>\n                                                <div><span>Condition:</span>{{boat.condition}} </div>\n                                                \n                                            </div>\n                                        </div>\n                                        <div class=\"searchResultInfo-date\"><span>Created Date:</span> {{boat.year}}</div>\n                                    </div>\n                                </div>\n                    </div>\n            </div>\n            <div id=\"adBox-container\">\n                    <div id=\"ad-box\">Empty block for ads</div>\n            </div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -2748,7 +3034,7 @@ module.exports = "<div class=\"main-content-wrapper\">\n    <div class=\"contain
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"main-content-wrapper\">\n\t<div class=\"container\" id=\"vd-container\">\n\t\t<div class=\"row\">\n\t\t\t<div id=\"vdBox-container\">\n\t\t\t\t<div id=\"vd-box\">\n\t\t\t\t\t<div id=\"vdHeader\">\n\t\t\t\t\t\t<div id=\"vdHeader-title\">{{car.title}}</div>\n\t\t\t\t\t\t<div><span>Price: </span>{{car.price | currency}}</div>\n\t\t\t\t\t\t<div><span>Created Date: </span>{{car.year}}</div>\n\t\t\t\t\t<div id=\"vdViewedHeader\">\n\t\t\t\t\t\t<div><span>Viewed This: </span>{{car.visitcount}}</div> \n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t<div id=\"vd-preview\">\n\t\t\t\t\t<div id=\"vd-previewImage\">\n\t\t\t\t\t\t<i id=\"vd-previewImageLeft\" class=\"fa fa-caret-left\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t<img *ngIf = \"previewImgFile\" [src] = \"previewImgFile\">\n\t\t\t\t\t\t<i id=\"vd-previewImageFullScreen\" class=\"fa fa-arrows-alt\" aria-hidden=\"true\"></i>\t\n\t\t\t\t\t\t<i id=\"vd-previewImageRight\" class=\"fa fa-caret-right\" aria-hidden=\"true\"></i>\n\t\t\t\t\t</div>\n\t\t\t\t\t\t<div id=\"vdPreviewItems\">\n\t\t\t\t\t\t\t<div class=\"vdItem-image\" *ngFor = \"let imgFile of imgFiles\">\n\t\t\t\t\t\t\t\t<img [src]=\"imgFile\">\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div id=\"vd-info\">\n\t\t\t\t\t\t\t<div id=\"vdInfo-innerLeft\">\t\t\t\t\t\n\t\t\t\t\t\t\t\t<div><span>Make: </span>{{car.make}}</div>\n\t\t\t\t\t\t\t\t<div><span>Model: </span>{{car.model}}</div>\n\t\t\t\t\t\t\t\t<div><span>Year:</span>{{car.year}}</div>\n\t\t\t\t\t\t\t\t<div><span>Price:</span>{{car.price | currency}}</div>\n\t\t\t\t\t\t\t\t<div><span>Transmission:</span>{{car.transmission}}</div>\n\t\t\t\t\t\t\t\t<div><span>FuelType:</span>{{car.fueltype}}\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div id=\"vdInfo-innerRight\">\n\t\t\t\t\t\t\t\t<div><span>Description: </span>\n\t\t\t\t\t\t\t\t\t{{car.description}}\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div><span>Features: </span>\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\t\t<ul *ngFor = \"let feature of features\">\n\t\t\t\t\t\t\t\t\t\t<li>{{feature}}</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n<div id=\"imagePopupContainer\">\n\t<div style=\"padding-top: 40px;\">\n\t\t<i id=\"closeImagePopupContainer\" class=\"fa fa-times\" aria-hidden=\"true\"></i>\n\t\t<img *ngIf = \"previewImgFile\" id=\"popupImage\" [src] = \"previewImgFile\">\n\t</div>\n</div>"
+module.exports = "\n<div class=\"main-content-wrapper\">\n\t<div class=\"container\" id=\"vd-container\">\n\t\t<div class=\"row\">\n\t\t\t<div id=\"vdBox-container\">\n\t\t\t\t<div id=\"vd-box\">\n\t\t\t\t\t<div id=\"vdHeader\">\n\t\t\t\t\t\t<div id=\"vdHeader-title\">{{car.title}}</div>\n\t\t\t\t\t\t<div><span>Price: </span>{{car.price | currency}}</div>\n\t\t\t\t\t\t<div><span>Created Date: </span>{{car.create_at}}</div>\n\t\t\t\t\t<div id=\"vdViewedHeader\">\n\t\t\t\t\t\t<div><span>Viewed This: </span>{{car.visitcount}}</div> \n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t<div id=\"vd-preview\">\n\t\t\t\t\t<div id=\"vd-previewImage\">\n\t\t\t\t\t\t<i id=\"vd-previewImageLeft\" class=\"fa fa-caret-left\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t<img *ngIf = \"previewImgFile\" [src] = \"previewImgFile\">\n\t\t\t\t\t\t<i id=\"vd-previewImageFullScreen\" class=\"fa fa-arrows-alt\" aria-hidden=\"true\"></i>\t\n\t\t\t\t\t\t<i id=\"vd-previewImageRight\" class=\"fa fa-caret-right\" aria-hidden=\"true\"></i>\n\t\t\t\t\t</div>\n\t\t\t\t\t\t<div id=\"vdPreviewItems\">\n\t\t\t\t\t\t\t<div class=\"vdItem-image\" *ngFor = \"let imgFile of imgFiles\">\n\t\t\t\t\t\t\t\t<img [src]=\"imgFile\">\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div id=\"vd-info\">\n\t\t\t\t\t\t\t<div id=\"vdInfo-innerLeft\">\t\t\t\t\t\n\t\t\t\t\t\t\t\t<div><span>Make: </span>{{car.make}}</div>\n\t\t\t\t\t\t\t\t<div><span>Model: </span>{{car.model}}</div>\n\t\t\t\t\t\t\t\t<div><span>Year:</span>{{car.year}}</div>\n\t\t\t\t\t\t\t\t<div><span>Price:</span>{{car.price | currency}}</div>\n\t\t\t\t\t\t\t\t<div><span>Transmission:</span>{{car.transmission}}</div>\n\t\t\t\t\t\t\t\t<div><span>FuelType:</span>{{car.fueltype}}\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div id=\"vdInfo-innerRight\">\n\t\t\t\t\t\t\t\t<div><span>Description: </span>\n\t\t\t\t\t\t\t\t\t{{car.description}}\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div><span>Features: </span>\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\t\t<ul *ngFor = \"let feature of features\">\n\t\t\t\t\t\t\t\t\t\t<li>{{feature}}</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n<div id=\"imagePopupContainer\">\n\t<div style=\"padding-top: 40px;\">\n\t\t<i id=\"closeImagePopupContainer\" class=\"fa fa-times\" aria-hidden=\"true\"></i>\n\t\t<img *ngIf = \"previewImgFile\" id=\"popupImage\" [src] = \"previewImgFile\">\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -2781,7 +3067,7 @@ module.exports = "<!--main content-->\n\t<div id=\"home-main\">\n\t\t<div class=
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n\t<div class=\"container\" id=\"map-container\">\n\t\t<div class=\"row\">\n\t\t\t<div id=\"adInfoBox-container\">\n\t\t\t\t<div id=\"adInfo-box\">\n\t\t\t\t\t<input id = \"ad_id\" type = \"hidden\" value = \"{{car.ad_id}}\" />\n\t\t\t\t\t<input id = \"vehicle_id\" type = \"hidden\" value = \"{{car.vehicle_id}}\" />\n\t\t\t\t\t<input id = \"car_id\" type = \"hidden\" value = \"{{car.id}}\" />\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Title: </span><a>{{car.title}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<input id = \"title\" class = \"ba-input\" type = \"text\" placeholder = \"Enter title\">\n\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Price: </span><a>{{car.price | currency}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<input id = \"price\" class = \"ba-input\" type = \"text\" placeholder = \"Enter price\">\n\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Description: </span><br><a>{{car.description}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<textarea id=\"description\" cols=\"30\" rows=\"10\" aria-invalid=\"false\" placeholder=\"Enter description\" class=\"ba-input\"></textarea>\n\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"hf-label\">Vehicle Details</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<input id = \"make\" type = \"hidden\" value = \"{{car.make_id}}\" />\n\t\t\t\t\t\t\t<span>Make: </span><a>{{car.make}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"make_id\" class=\"ba-select\" title=\"SELECT MAKE\" (change) = \"onMakeChange($event)\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let make of makes\" [value]=\"make.id\" >{{make.value}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<input id = \"model\" type = \"hidden\" value = \"{{car.model_id}}\" />\n\t\t\t\t\t\t\t<span>Model: </span><a>{{car.model}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"model_id\" class=\"ba-select\" title=\"SELECT MODEL\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let model of models\" [value]=\"model.id\" >{{model.modelvalue}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Year: </span><a>{{car.year}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"year\" class=\"ba-select\" title=\"SELECT YEAR\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let year of years\" [value]=\"year\" >{{year}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Fuel Type: </span><a>{{car.fueltype}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"fueltype\" class=\"ba-select\" title=\"SELECT TRANSMISSION\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let fueltype of fueltypes\" [value]=\"fueltype\" >{{fueltype}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Condition: </span><a>{{car.condition}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"condition\" class=\"ba-select\" title=\"SELECT CONDITION\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let condition of conditions\" [value]=\"condition\" >{{condition}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Transmission: </span><a>{{car.transmission}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"transmission\" class=\"ba-select\" title=\"SELECT TRANSMISSION\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let transmission of transmissions\" [value]=\"transmission\" >{{transmission}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Color: </span><a>{{car.color}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"color\" class=\"ba-select\" title=\"SELECT COLOR\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let color of colors\" [value]=\"color\" >{{color}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div id=\"PhotoBox-container\">\n\t\t\t\t<div id=\"Photo-box\">\n\t\t\t\t\t<div style=\"border-bottom: 1px solid #2f3c40;\">\n\t\t\t\t\t\t<h2>Photos</h2>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div id=\"PhotoBoxItem-container\">\n\t\t\t\t\t\t<div class=\"PhotoBox-item\" *ngFor = \"let imgFile of imgFiles; let i = index\">\n\t\t\t\t\t\t\t<div class=\"PhotoBox-image\">\n\t\t\t\t\t\t\t\t<img [src]=\"imgFile\">\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"PhotoBox-delete\" (click) = \"onDeleteSubmit(imgFile)\" [attr.data-index]=\"i\">Delete</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div id=\"PhotoBox-preview\">\n\t\t\t\t\t\t<img *ngIf = \"previewImgFile\" src=\"{{previewImgFile}}\">\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div id=\"publishButton-container\">\n\t\t\t\t\t<button id=\"publishButton\" (click) = \"onPublishSubmit()\">Publish</button>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\n\n"
+module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n\t<div class=\"container\" id=\"map-container\">\n\t\t<div class=\"row\">\n\t\t\t<div id=\"adInfoBox-container\">\n\t\t\t\t<div id=\"adInfo-box\">\n\t\t\t\t\t<input id = \"ad_id\" type = \"hidden\" value = \"{{car.ad_id}}\" />\n\t\t\t\t\t<input id = \"vehicle_id\" type = \"hidden\" value = \"{{car.vehicle_id}}\" />\n\t\t\t\t\t<input id = \"car_id\" type = \"hidden\" value = \"{{car.id}}\" />\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Title: </span><a>{{car.title}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<input id = \"title\" class = \"ba-input\" type = \"text\" placeholder = \"{{car.title}}\">\n\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Price: </span><a>{{car.price | currency}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<input id = \"price\" class = \"ba-input\" pattern=\"^\\$\\d{1,3}(,\\d{3})*(\\.\\d+)?$\" type = \"currency\" placeholder = \"{{car.price}}\">\n\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Description: </span><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i><a class=\"a-ads-description\">{{car.description}}</a>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<textarea id=\"description\" cols=\"30\" rows=\"10\" aria-invalid=\"false\" placeholder=\"{{car.description}}\" class=\"ba-input\"></textarea>\n\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"hf-label\">Vehicle Details</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<input id = \"make\" type = \"hidden\" value = \"{{car.make_id}}\" />\n\t\t\t\t\t\t\t<span>Make: </span><a>{{car.make}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"make_id\" class=\"ba-select\" title=\"SELECT MAKE\" (change) = \"onMakeChange($event)\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let make of makes\" [value]=\"make.id\" >{{make.value}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<input id = \"model\" type = \"hidden\" value = \"{{car.model_id}}\" />\n\t\t\t\t\t\t\t<span>Model: </span><a>{{car.model}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"model_id\" class=\"ba-select\" title=\"SELECT MODEL\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let model of models\" [value]=\"model.id\" >{{model.modelvalue}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Year: </span><a>{{car.year}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"year\" class=\"ba-select\" title=\"SELECT YEAR\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let year of years\" [value]=\"year\" >{{year}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Fuel Type: </span><a>{{car.fueltype}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"fueltype\" class=\"ba-select\" title=\"SELECT TRANSMISSION\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let fueltype of fueltypes\" [value]=\"fueltype\" >{{fueltype}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Condition: </span><a>{{car.condition}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"condition\" class=\"ba-select\" title=\"SELECT CONDITION\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let condition of conditions\" [value]=\"condition\" >{{condition}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Transmission: </span><a>{{car.transmission}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"transmission\" class=\"ba-select\" title=\"SELECT TRANSMISSION\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let transmission of transmissions\" [value]=\"transmission\" >{{transmission}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<span>Color: </span><a>{{car.color}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t<select id = \"color\" class=\"ba-select\" title=\"SELECT COLOR\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t<option *ngFor=\"let color of colors\" [value]=\"color\" >{{color}}</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<i class=\"fa fa-check d-none\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div id=\"PhotoBox-container\">\n\t\t\t\t<div id=\"Photo-box\">\n\t\t\t\t\t<div style=\"border-bottom: 1px solid #2f3c40;\">\n\t\t\t\t\t\t<h2>Photos</h2>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div id=\"PhotoBoxItem-container\">\n\t\t\t\t\t\t<div  class=\"left-exist-photo\" *ngFor = \"let imgFile of imgFiles\">\n\t\t\t\t\t\t\t<div class=\"lefted-close-btn\">\n\t\t\t\t\t\t\t\t<img class=\"close-icon\" src=\"../../../assets/img/Close.png\" (click)=\"onDeleteSubmit(imgFile)\"/>\n\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t<img src=\"{{imgFile}}\" class=\"left-preview-img\" (click)=\"changePreview(imgFile)\">\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<!-- <div class=\"PhotoBox-item\" *ngFor = \"let imgFile of imgFiles\">\n\t\t\t\t\t\t\t<div class=\"PhotoBox-image\">\n\t\t\t\t\t\t\t\t<img [src]=\"imgFile\">\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"PhotoBox-delete\" (click) = \"onDeleteSubmit(imgFile)\" [attr.data-index]=\"i\">Delete</button>\n\t\t\t\t\t\t</div> -->\n\t\t\t\t\t</div>\n\t\t\t\t\t<div id=\"PhotoBox-preview\">\n\t\t\t\t\t\t<img *ngIf = \"previewImgFile\" src=\"{{previewImgFile}}\">\t\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div id=\"publishButton-container\">\n\t\t\t\t\t<div *ngIf=\"!car.pubish\">\n\t\t\t\t\t\t<button id=\"publishButton\" (click) = \"onPublishSubmit()\">Publish</button>\n\t\t\t\t\t</div>\n\t\t\t\t\t<app-alerts></app-alerts>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -2792,7 +3078,7 @@ module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n\t<
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n  <div class=\"container\" id=\"ma-container\">\n    <div class=\"row\">\n      <div id=\"adListBox-container\">\n        <div id=\"adList-box\">\n          <div class=\"adList-item\" *ngFor = \"let ad of ads\">\n            <div class=\"adList-info\">\n              <div><span style='cursor:pointer;' (click)=\"getCarByAdId(ad.id)\" >Ad Number: </span>222</div>\n              <div><span>Title: </span>{{ad.title}}</div>\n              <div><span>Price: </span>{{ad.price | currency}}</div>\n              <div><span>Created Date: </span>{{ad.create_at}}</div>\n            </div>\n            <div class=\"adList-buttons\">\n              <button>Approve</button>\n              <button>Reject</button>\n              <button (click)=\"deleteAd(ad)\"><i class = \"fa fa-trash\"></i></button>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div id=\"adSelectedBox-container\">\n        <div id=\"adSelectedSearch-box\">Search: \n          <input type=\"text\" placeholder=\"Ad Number..\">\n          <button><i class=\"fa fa-search\" aria-hidden=\"true\"></i></button>\n        </div>\n        <div id=\"adSelected-box\">\n          <div id=\"adSelected-number\"><span>Ad Number: </span></div>\n          <div id=\"adSelected-info\">\n            <div class=\"hf-label\">Vehicle Details</div>\n            <div><span>Make: </span> {{car.make}}</div>\n            <div><span>Model: </span> {{car.model}}</div>\n            <div><span>Year:</span> {{car.year}}</div>\n            <div><span>Price:</span> {{car.price | currency}}</div>\n            <div><span>Transmission:</span> {{car.transmission}}</div>\n            <div><span>Fuel:</span> {{car.fueltype}}\n            </div>\n            <div><span>Description: </span>\n              <br>{{car.description}}\n            </div>\n            <div><span>Features: </span>\n              <br>\n              <ul *ngFor = \"let feature of features\">\n                <li>{{feature}}</li>\n              </ul>\n            </div>\n          </div>\n          <div id=\"adSelected-preview\">\n            <div id=\"adSelected-previewImage\">\n              <i class=\"fa fa-caret-left\" aria-hidden=\"true\" style=\"left:5px;\" id='vd-previewImageLeft'></i>\n              <img *ngIf = \"previewImgFile\" [src]=\"previewImgFile\">\n              <i class=\"fa fa-caret-right\" aria-hidden=\"true\" style=\"right: 5px;\" id='vd-previewImageRight'></i>\n            </div>\n            <div id=\"adSelectedPreviewItems\">\n              <div class=\"adSelectedItem-image\" *ngFor = \"let imgFile of imgFiles\">\n                <img [src]=\"imgFile\" />\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n\t"
+module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n  <div class=\"container\" id=\"ma-container\">\n    <div class=\"row\">\n      <div id=\"adListBox-container\">\n        <div id=\"adList-box\">\n          <div class=\"adList-item\" *ngFor = \"let ad of ads\">\n            <div class=\"adList-info\">\n              <div><span style='cursor:pointer;' (click)=\"getCarByAdId(ad.id)\" >Ad Number: </span>222</div>\n              <div><span>Title: </span>{{ad.title}}</div>\n              <div><span>Price: </span>{{ad.price | currency}}</div>\n              <div><span>Created Date: </span>{{ad.create_at}}</div>\n            </div>\n            <div class=\"adList-buttons\">\n              <button (click)=\"approveAd(ad)\">Approve</button>\n              <button>Reject</button>\n              <button (click)=\"deleteAd(ad)\"><i class = \"fa fa-trash\"></i></button>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div id=\"adSelectedBox-container\">\n        <div id=\"adSelectedSearch-box\">Search: \n          <input type=\"text\" placeholder=\"Ad Number..\">\n          <button><i class=\"fa fa-search\" aria-hidden=\"true\"></i></button>\n        </div>\n        <div id=\"adSelected-box\">\n          <div id=\"adSelected-number\"><span>Ad Number: </span></div>\n          <div id=\"adSelected-info\">\n            <div class=\"hf-label\">Vehicle Details</div>\n            <div><span>Make: </span> {{car.make}}</div>\n            <div><span>Model: </span> {{car.model}}</div>\n            <div><span>Year:</span> {{car.year}}</div>\n            <div><span>Price:</span> {{car.price | currency}}</div>\n            <div><span>Transmission:</span> {{car.transmission}}</div>\n            <div><span>Fuel:</span> {{car.fueltype}}\n            </div>\n            <div><span>Description: </span>\n              <br>{{car.description}}\n            </div>\n            <div><span>Features: </span>\n              <br>\n              <ul *ngFor = \"let feature of features\">\n                <li>{{feature}}</li>\n              </ul>\n            </div>\n          </div>\n          <div id=\"adSelected-preview\">\n            <div id=\"adSelected-previewImage\">\n              <i class=\"fa fa-caret-left\" aria-hidden=\"true\" style=\"left:5px;\" id='vd-previewImageLeft'></i>\n              <img *ngIf = \"previewImgFile\" [src]=\"previewImgFile\">\n              <i class=\"fa fa-caret-right\" aria-hidden=\"true\" style=\"right: 5px;\" id='vd-previewImageRight'></i>\n            </div>\n            <div id=\"adSelectedPreviewItems\">\n              <div class=\"adSelectedItem-image\" *ngFor = \"let imgFile of imgFiles\">\n                <img [src]=\"imgFile\" />\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n\t"
 
 /***/ }),
 
@@ -2803,7 +3089,7 @@ module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n  <
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n\t<div class=\"container\" id=\"nap-container\">\n\t\t<div class=\"loader\" style = \"display:none;\"></div>\n\t\t<div class=\"row\">\n\t\t\t<form [formGroup]=\"newForm\" id = \"newForm\" method=\"post\">\n\t\t\t\t<div id=\"vehicleDetailsBox-container\">\n\t\t\t\t\t<div id=\"vehicleDetails-box\">\n\t\t\t\t\t\t<div class=\"row\">\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<h2>Ad Details</h2>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\" style=\"\">TITLE</div>\n\t\t\t\t\t\t\t\t<input formControlName = \"title\" class = \"form-control ad-input\" type = \"text\" [ngClass]=\"{ 'is-invalid': submitted && fNew.title.errors }\" placeholder = \"Enter title\"/>\n\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.title.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.title.errors.required\">Title is required</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\" style=\"\">PRICE</div>\n\t\t\t\t\t\t\t\t<input formControlName = \"price\" class = \"form-control ad-input\" type = \"number\" [ngClass]=\"{ 'is-invalid': submitted && fNew.price.errors }\" placeholder = \"Enter price\"/>\n\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.price.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.price.errors.required\">Price is only required number</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\" style=\"\">DESCRIPTION</div>\n\t\t\t\t\t\t\t\t<textarea formControlName=\"description\" class=\"form-control ad-textarea\" cols=\"30\" rows=\"10\" aria-invalid=\"false\" [ngClass]=\"{ 'is-invalid': submitted && fNew.description.errors }\" placeholder=\"Enter description\" id = \"description\"></textarea>\n\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.description.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.description.errors.required\">Description is required</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div id=\"vehicleDetailsBox2-container\">\n\t\t\t\t\t<div id=\"vehicleDetails-box\">\n\t\t\t\t\t\t<div class=\"row\">\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<h2>Vehicle Details</h2>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\" style=\"\">MAKE</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"make_id\" class = \"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.make_id.errors }\" (change) = \"onMakeChange($event)\" title=\"SELECT NAME\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor =  \"let make of makes\" [value] = \"make.id\">{{make.value}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.make_id.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.make_id.errors.required\">Make is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">MODEL</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"model_id\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.model_id.errors }\" title=\"SELECT MODEL\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let model of models\" [value]=\"model.id\" >{{model.modelvalue}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.model_id.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.model_id.errors.required\">Model is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">YEAR</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"year\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.year.errors }\" title=\"SELECT YEAR\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let year of years\" [value]=\"year\" >{{year}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.year.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.year.errors.required\">Year is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">FUEL TYPE</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"fueltype\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.fueltype.errors }\" title=\"SELECT FUELTYPE\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let fueltype of fueltypes\" [value]=\"fueltype\" >{{fueltype}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.fueltype.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.fueltype.errors.required\">Fueltype is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">CONDITION\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"condition\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.condition.errors }\" title=\"SELECT CONDITION\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let condition of conditions\" [value]=\"condition\" >{{condition}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.condition.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.condition.errors.required\">Condition is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">TRANSMISSION</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"transmission\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.transmission.errors }\" title=\"SELECT TRANSMISSION\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let transmission of transmissions\" [value]=\"transmission\" >{{transmission}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.transmission.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.transmission.errors.required\">Transmission is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">COLOR</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"color\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.color.errors }\" title=\"SELECT COLOR\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let color of colors\" [value]=\"color\" >{{color}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.color.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.color.errors.required\">Color is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">Features</div>\n\t\t\t\t\t\t\t\t<label class=\"hf-checkbox\" *ngFor=\"let feature of features\">\n\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" [value]=\"feature\">{{feature}}\n\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<button type=\"submit\" class=\"button\" id=\"hf-button\">Save</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</form>\n\t\t\t<div id=\"uploadPhotoBox-container\" style = \"display:block;\">\n\t\t\t\t<div id=\"uploadPhoto-box\"  style = \"display:block;\">\n\t\t\t\t\t<div style=\"border-bottom: 1px solid #2f3c40;\">\n\t\t\t\t\t\t<h2>Upload Photos</h2>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<form [formGroup]=\"uploadForm\" (ngSubmit)=\"onUploadSubmit()\">\n\t\t\t\t\t\t\t\t<div class=\"custom-file col-md-8\">\n\t\t\t\t\t\t\t\t\t<input type=\"file\" class=\"custom-file-input\" name=\"carimg\" (change)=\"onFileChange($event)\">\n\t\t\t\t\t\t\t\t\t<label class=\"custom-file-label\" for=\"customFile\">Choose file</label>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<button class=\"col-md-4 pt-2 uploadPhotoBox-uploadButton\" type=\"submit\">Upload</button>\n\t\t\t\t\t\t\t</form>\t\t\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div id=\"uploadPhotoBoxItem-container\">\n\t\t\t\t\t\t<div class=\"uploadPhotoBox-item\" *ngFor = \"let imgFile of imgFiles;\">\n\t\t\t\t\t\t\t<div class=\"uploadPhotoBox-image\">\n\t\t\t\t\t\t\t\t<img [src]=\"imgFile\">\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"uploadPhotoBox-delete\" (click) = \"onDeleteSubmit(imgFile)\" [attr.data-index]=\"i\">Delete</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div id=\"uploadPhotoBox-preview\">\n\t\t\t\t\t\t<img *ngIf = \"previewImgFile\" src=\"{{previewImgFile}}\">\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div id=\"publishButton-container\">\n\t\t\t\t\t<button id=\"publishButton\" (click) = \"onPublishSubmit()\">Publish</button>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n"
+module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n\t<div class=\"container\" id=\"nap-container\">\n\t\t<div class=\"loader\" style = \"display:none;\"></div>\n\t\t<div class=\"row\">\n\t\t\t<form [formGroup]=\"newForm\" id = \"newForm\" method=\"post\">\n\t\t\t\t<div id=\"vehicleDetailsBox-container\">\n\t\t\t\t\t<div id=\"vehicleDetails-box\">\n\t\t\t\t\t\t<div class=\"row\">\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<h2>Ad Details</h2>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\" style=\"\">TITLE</div>\n\t\t\t\t\t\t\t\t<input formControlName = \"title\" class = \"form-control ad-input\" type = \"text\" [ngClass]=\"{ 'is-invalid': submitted && fNew.title.errors }\" placeholder = \"Enter title\"/>\n\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.title.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.title.errors.required\">Title is required</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\" style=\"\">PRICE</div>\n\t\t\t\t\t\t\t\t<input formControlName = \"price\" class = \"form-control ad-input\" type = \"number\" [ngClass]=\"{ 'is-invalid': submitted && fNew.price.errors }\" placeholder = \"Enter price\"/>\n\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.price.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.price.errors.min\">Price is only required positive number</div>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.price.errors.required\">Price is required </div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\" style=\"\">DESCRIPTION</div>\n\t\t\t\t\t\t\t\t<textarea formControlName=\"description\" class=\"form-control ad-textarea\" cols=\"30\" rows=\"10\" aria-invalid=\"false\" [ngClass]=\"{ 'is-invalid': submitted && fNew.description.errors }\" placeholder=\"Enter description\" id = \"description\"></textarea>\n\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.description.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.description.errors.required\">Description is required</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div id=\"vehicleDetailsBox2-container\">\n\t\t\t\t\t<div id=\"vehicleDetails-box\">\n\t\t\t\t\t\t<div class=\"row\">\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<h2>Vehicle Details</h2>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\" style=\"\">MAKE</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"make_id\" class = \"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.make_id.errors }\" (change) = \"onMakeChange($event)\" title=\"SELECT NAME\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor =  \"let make of makes\" [value] = \"make.id\">{{make.value}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.make_id.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.make_id.errors.required\">Make is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">MODEL</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"model_id\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.model_id.errors }\" title=\"SELECT MODEL\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let model of models\" [value]=\"model.id\" >{{model.modelvalue}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.model_id.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.model_id.errors.required\">Model is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">YEAR</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"year\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.year.errors }\" title=\"SELECT YEAR\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let year of years\" [value]=\"year\" >{{year}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.year.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.year.errors.required\">Year is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">FUEL TYPE</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"fueltype\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.fueltype.errors }\" title=\"SELECT FUELTYPE\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let fueltype of fueltypes\" [value]=\"fueltype\" >{{fueltype}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.fueltype.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.fueltype.errors.required\">Fueltype is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">CONDITION\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"condition\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.condition.errors }\" title=\"SELECT CONDITION\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let condition of conditions\" [value]=\"condition\" >{{condition}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.condition.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.condition.errors.required\">Condition is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">TYPE\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select class=\"form-control selectpicker \" title=\"SELECT TYPE\" data-width=\"100%\" (change)= \"changeTypes($event)\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let type of types\" [value]=\"type.value\" >{{type.value}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\" [hidden]=\"inputType!='BOAT'\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">LENGTH</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"length\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.length.errors }\" title=\"SELECT LENGTH\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let length of lengths\" [value]=\"length.id\" >{{length.length}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.length.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.length.errors.required&&inputType=='BOAT'\">Length is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\" [hidden]=\"inputType!='CAR'\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">TRANSMISSION</div>\n\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t<select formControlName = \"transmission\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.transmission.errors }\" title=\"SELECT TRANSMISSION\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let transmission of transmissions\" [value]=\"transmission\" >{{transmission}}</option>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.transmission.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.transmission.errors.required&&inputType=='CAR'\">Transmission is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\" [hidden]=\"inputType!='CAR'\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">COLOR</div>\n\t\t\t\t\t\t\t\t\t<div class=\"hf-select\">\n\t\t\t\t\t\t\t\t\t\t<select formControlName = \"color\" class=\"form-control selectpicker\" [ngClass]=\"{ 'is-invalid': submitted && fNew.color.errors }\" title=\"SELECT COLOR\" data-width=\"100%\">\n\t\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let color of colors\" [value]=\"color\" >{{color}}</option>\n\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fNew.color.errors&&inputType=='CAR'\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fNew.color.errors.required&&inputType=='CAR'\">Color is required</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\" [hidden]=\"inputType!='CAR'\">\n\t\t\t\t\t\t\t\t<div class=\"hf-label\">Features</div>\n\t\t\t\t\t\t\t\t<label class=\"hf-checkbox\" *ngFor=\"let feature of features\">\n\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" [value]=\"feature\">{{feature}}\n\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"col-md-12 col-sm-12\">\n\t\t\t\t\t\t\t\t<button type=\"submit\" class=\"button\" id=\"hf-button\">Save</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</form>\n\t\t\t<app-alerts></app-alerts>\n\t\t\t<div id=\"uploadPhotoBox-container\" style = \"display:block;\">\n\t\t\t\t<div id=\"uploadPhoto-box\"  style = \"display:block;\">\n\t\t\t\t\t<div style=\"border-bottom: 1px solid #2f3c40;\">\n\t\t\t\t\t\t<h2>Upload Photos</h2>\n\t\t\t\t\t</div>\n\t\t\t\t\t<!-- <div id=\"uploadPhotoBoxItem-container\">\n\t\t\t\t\t\t<div class=\"uploadPhotoBox-item\" *ngFor = \"let imgFile of imgFiles;\">\n\t\t\t\t\t\t\t<div class=\"uploadPhotoBox-image\">\n\t\t\t\t\t\t\t\t<img [src]=\"imgFile\">\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"uploadPhotoBox-delete\" (click) = \"onDeleteSubmit(imgFile)\" [attr.data-index]=\"i\">Delete</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div> -->\n\t\t\t\t\t<div class=\"photo-array\">\n\t\t\t\t\t\t<div class=\"add-Photo\">\n\t\t\t\t\t\t\t<form [formGroup]=\"uploadForm\">\n\t\t\t\t\t\t\t\t<input type=\"file\" name=\"carimg\" (change)=\"onFileChange($event)\"/>\n\t\t\t\t\t\t\t\t<button class=\"add-Photo-btn\"></button>\n\t\t\t\t\t\t\t</form>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<!-- id=\"uploadPhotoBox-preview\" -->\n\t\t\t\t\t\t<div  class=\"exist-photo\" *ngFor = \"let item of img_arr\">\n\t\t\t\t\t\t\t<div class=\"close-btn\">\n\t\t\t\t\t\t\t\t<img src=\"../../../assets/img/Close.png\" (click)=\"closeImage(item)\"/>\n\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t<img src=\"{{item.base64}}\" class=\"preview-img\">\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t<div id=\"publishButton-container\">\n\t\t\t\t\t<button class=\"col-md-4 uploadPhotoBox-uploadButton pt-2\" [hidden] = \"currentUser.type!='ADMIN'\" (click) = \"onPublishSubmit()\">Publish</button>\n\t\t\t\t\t<button class=\"col-md-4 uploadPhotoBox-uploadButton pt-2\" [hidden] = \"currentUser.type!='USER'\" (click) = \"onPublishSubmit()\">User's Button</button>\n\t\t\t\t\t<button class=\"col-md-4 uploadPhotoBox-uploadButton pt-2\" (click) = \"onUploadSubmit()\">Upload</button>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n"
 
 /***/ }),
 
@@ -2814,7 +3100,7 @@ module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n\t<
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n\t\t<div class=\"container\" id=\"up-container\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<form [formGroup]=\"accountForm\" method=\"post\">\n\t\t\t\t<div id=\"AccSettingsBox-container\">\n\t\t\t\t\t<div id=\"AccSettings-box\">\n\t\t\t\t\t\t<h2>Account Settings</h2>\n\t\t\t\t\t\t<div style=\"margin-top: 20px;\">\n\t\t\t\t\t\t\t<input id = \"userid\" type = \"hidden\" value = \"{{user.id}}\" />\n\t\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>Name: </span><a>{{user.username}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input email type=\"text\" id=\"username\" formControlName=\"username\" class=\"form-control ba-input\" [ngClass]=\"{ 'is-invalid': submitted && fAccount.username.errors }\" placeholder=\"Enter email address\"/>\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fAccount.username.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.username.errors.exist\">User name already used</div>\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.username.errors.email\">Email is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>Password: </span><a>**********</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"password\" formControlName=\"password\" class = \"form-control ba-input\" type = \"password\" [ngClass]=\"{ 'is-invalid': submitted && fAccount.password.errors }\" placeholder = \"Enter password\">\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fAccount.password.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.password.errors.required\">Password is required</div>\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.password.errors.minlength\">Password must be at least 6 characters</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div id=\"confimrPasswordDiv\" class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"confirmPassword\" formControlName=\"confirmPassword\" class = \"form-control ba-input\" type = \"password\" [ngClass]=\"{ 'is-invalid': submitted && fAccount.confirmPassword.errors }\" placeholder = \"Enter confirm password\">\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fAccount.confirmPassword.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.confirmPassword.errors.required\">Confirm Password is required</div>\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.confirmPassword.errors.minlength\">Password must be at least 6 characters</div>\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.confirmPassword.errors.mustMatch\">Passwords must match</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"hf-label\">ADDRESS</div>\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>Country: </span><a>{{user.country}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"country\" class = \"ba-input\" type = \"text\" placeholder = \"Enter country\">\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>City: </span><a>{{user.city}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"city\" class = \"ba-input\" type = \"text\" placeholder = \"Enter city\">\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>Street: </span><a>{{user.address}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"address\" class = \"ba-input\" type = \"text\" placeholder = \"Enter street\">\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"hf-label\">Contact details</div>\n\t\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>Mobile: </span><a>{{user.mobile}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"mobile\" class = \"ba-input\" type = \"text\" placeholder = \"Enter mobile number\">\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<!--<div style=\"text-align:center;\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"button\" id=\"hf-button\">Save</button>\n\t\t\t\t\t\t</div>-->\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t\t<div id=\"manageAdsBox-container\">\n\t\t\t\t\t<div id=\"manageAds-box\">\n\t\t\t\t\t\t<h2>Manage Ads</h2>\n\t\t\t\t\t\t<div class=\"manageAdsItem\"  *ngFor = \"let ad of ads\">\n\t\t\t\t\t\t\t<div class=\"manageAdsItem-left\">\n\t\t\t\t\t\t\t\t<div><span>Title: </span>{{ad.title}}</div>\n\t\t\t\t\t\t\t\t<div><span>Price: </span>{{ad.price | currency}}</div>\n\t\t\t\t\t\t\t\t<div><span>Description: </span>{{ad.description}}</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"manageAdsItem-right\">\n\t\t\t\t\t\t\t\t<a href = \"/manage-ad/{{ad.id}}\">\n\t\t\t\t\t\t\t\t\t<button>Modify</button>\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t<button>Mark as sold</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div id=\"NewAdBox-container\">\n\t\t\t\t\t<div id=\"NewAd-box\">\n\t\t\t\t\t\t<h2>New Ad?</h2>\n\t\t\t\t\t\t<a href = \"/new-ad/{{user.id}}\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"button\">\n\t\t\t\t\t\t\t<i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Click here</button>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\t"
+module.exports = "<!--main content-->\n<div class=\"main-content-wrapper\">\n\t\t<div class=\"container\" id=\"up-container\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<form [formGroup]=\"accountForm\" method=\"post\">\n\t\t\t\t<div id=\"AccSettingsBox-container\">\n\t\t\t\t\t<div id=\"AccSettings-box\">\n\t\t\t\t\t\t<h2>Account Settings</h2>\n\t\t\t\t\t\t<div style=\"margin-top: 20px;\">\n\t\t\t\t\t\t\t<input id = \"userid\" type = \"hidden\" value = \"{{user.id}}\" />\n\t\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>Name: </span><a>{{user.username}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input email type=\"text\" id=\"username\" formControlName=\"username\" class=\"form-control ba-input\" [ngClass]=\"{ 'is-invalid': submitted && fAccount.username.errors }\" placeholder=\"Enter email address\"/>\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fAccount.username.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.username.errors.exist\">User name already used</div>\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.username.errors.email\">Email is required</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>Password: </span><a>**********</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"password\" formControlName=\"password\" class = \"form-control ba-input\" type = \"password\" [ngClass]=\"{ 'is-invalid': submitted && fAccount.password.errors }\" placeholder = \"Enter password\">\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fAccount.password.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.password.errors.required\">Password is required</div>\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.password.errors.minlength\">Password must be at least 6 characters</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div id=\"confimrPasswordDiv\" class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"confirmPassword\" formControlName=\"confirmPassword\" class = \"form-control ba-input\" type = \"password\" [ngClass]=\"{ 'is-invalid': submitted && fAccount.confirmPassword.errors }\" placeholder = \"Enter confirm password\">\n\t\t\t\t\t\t\t\t\t<div *ngIf=\"submitted && fAccount.confirmPassword.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.confirmPassword.errors.required\">Confirm Password is required</div>\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.confirmPassword.errors.minlength\">Password must be at least 6 characters</div>\n\t\t\t\t\t\t\t\t\t\t<div *ngIf=\"fAccount.confirmPassword.errors.mustMatch\">Passwords must match</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"hf-label\">ADDRESS</div>\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>Country: </span><a>{{user.country}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"country\" class = \"ba-input\" type = \"text\" placeholder = \"Enter country\">\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>City: </span><a>{{user.city}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"city\" class = \"ba-input\" type = \"text\" placeholder = \"Enter city\">\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>Street: </span><a>{{user.address}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"address\" class = \"ba-input\" type = \"text\" placeholder = \"Enter street\">\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"hf-label\">Contact details</div>\n\t\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<span>Mobile: </span><a>{{user.mobile}}</a><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class = \"d-none\">\n\t\t\t\t\t\t\t\t\t<input id = \"mobile\" class = \"ba-input\" type = \"text\" placeholder = \"Enter mobile number\">\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<!--<div style=\"text-align:center;\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"button\" id=\"hf-button\">Save</button>\n\t\t\t\t\t\t</div>-->\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t\t<div id=\"manageAdsBox-container\">\n\t\t\t\t\t<div id=\"manageAds-box\">\n\t\t\t\t\t\t<h2>Manage Ads</h2>\n\t\t\t\t\t\t<div class=\"manageAdsItem\"  *ngFor = \"let ad of ads\">\n\t\t\t\t\t\t\t<div class=\"manageAdsItem-left\">\n\t\t\t\t\t\t\t\t<div><span>Title: </span>{{ad.title}}</div>\n\t\t\t\t\t\t\t\t<div><span>Price: </span>{{ad.price | currency}}</div>\n\t\t\t\t\t\t\t\t<div class=\"description\"><span>Description: </span><div class=\"ads-description\">{{ad.description}}</div></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"manageAdsItem-right\">\n\t\t\t\t\t\t\t\t<a href = \"/manage-ad/{{ad.id}}\">\n\t\t\t\t\t\t\t\t\t<button>Modify</button>\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t<button>Mark as sold</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div id=\"NewAdBox-container\">\n\t\t\t\t\t<div id=\"NewAd-box\">\n\t\t\t\t\t\t<h2>New Ad?</h2>\n\t\t\t\t\t\t<a href = \"/new-ad/{{user.id}}\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"button\">\n\t\t\t\t\t\t\t<i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Click here</button>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\t"
 
 /***/ }),
 

@@ -8,6 +8,9 @@ export class BoatService {
 
   constructor(private http: HttpClient,
               private commonService: CommonService) { }
+  addBoat(boat : any){
+    return this.http.post(this.commonService.baseurl+'/boats', boat);
+  }
   getAllBoat(){
     return this.http.get(this.commonService.baseurl+'/boats');
   }
@@ -16,6 +19,9 @@ export class BoatService {
   }
   getBoatById(id : string){
     return this.http.get(this.commonService.baseurl+'/boats/'+id);
+  }
+  getBoatAloneById(id : string){
+    return this.http.get(this.commonService.baseurl + '/boats/alone/' + id);
   }
   getSearchAllBoatOnIndex(params: any){
     return this.http.post(this.commonService.baseurl+'/boats/search-index',params);

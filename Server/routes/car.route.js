@@ -44,5 +44,5 @@ const multer = Multer({
 
     // Upload a Car image file
     // router.post('/upload/:car_id',cars.upload);
-    router.post('/upload/:car_id',multer.single("file"),cars.upload);
+    router.post('/upload/:car_id',multer.array("file"),cars.upload);
     module.exports = router;

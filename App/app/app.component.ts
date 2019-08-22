@@ -94,12 +94,16 @@ export class AppComponent {
       .pipe(first())
       .subscribe(
         (data:UserModel) => {
+          console.log(data);
           $('.modal-dialog-loader').hide();
           $('#loginPopup').modal('toggle');
           if (data.type == 'ADMIN')
             this.router.navigate(["/monitor-page"]);
-          else
+          else if (data.type == 'MORDERTER'){
             this.router.navigate(['/user-profile/' + data.id]);
+          }else{
+            this.router.navigate(['/user-profile/' + data.id]);
+          }
         },
         err => {
           $('.modal-dialog-loader').hide();

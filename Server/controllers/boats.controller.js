@@ -1,6 +1,7 @@
 var admin = require("firebase-admin");
 var db = admin.firestore();
 var date = require("../../config/date");
+const path = require('path');
 exports.create = (req, res) => {
     let boat = {
         vehicle_id  :req.body.vehicle_id,
@@ -8,6 +9,7 @@ exports.create = (req, res) => {
         type: req.body.type,
         subtype: req.body.subtype,
         hours: req.body.hours,
+        imgfiles: req.body.imgfiles,
         create_at: date.getDate(),
         update_at: date.getDate(),
     }
@@ -18,13 +20,24 @@ exports.create = (req, res) => {
 
     doc.set(boat)
     .then(data => {
-        res.jsont(boat);
+        res.json(boat);
     }).catch(err => {
         return res.status(500).json({
             message: err.message || "Something wrong while creating the boat."
         });
     });
 }
+exports.findAloneOne = async (req, res) => {
+
+    let boat = {};
+    
+    const boatSnaps = await db.collection('boats').where('id', '==', req.params.id).get();
+
+    carSnaps.forEach(function(doc) {
+        boat = doc.data();
+        res.json(boat);
+    });
+};
 exports.findOne = async (req,res) => {
     let boat ;
     const boatSnaps = await db.collection('boats').where('id','==',req.params.id).get();
@@ -365,17 +378,72 @@ async function getAllByPrice(req,res,adSnaps){
                 });
                 console.log(flag);
                 console.log(boat.make_id);
-                if (flag&&(make_id   == "" || make_id   == boat.make_id )&&(model_id =="" || boat.model_id == model_id)&&
-                    (toPrice   == "" || toPrice   >= boat.price   )  &&
-                    (fromYear  == "" || fromYear  <= boat.year    )  &&
-                    (toYear    == "" || toYear    >= boat.year    )&&(to == 0 || boat.length<=to)
-                    &&(from == 0|| boat.length<=from)) {
-                            boats.push(boat);
-                    }
+                if (flag&&(make_id  == "" || make_id  == boat.make_id )&&(model_id =="" || boat.model_id == model_id)&&
+                    (toPrice == "" || toPrice   >= boat.price)  &&
+                    (fromYear == "" || fromYear  <= boat.year)  &&
+                    (toYear == "" || toYear    >= boat.year)&&(to == 0 || boat.length<=to)
+                    &&(from == 0|| boat.length>=from)) {
+                        boats.push(boat);
+                }
                    
             });
         }
     }
 
     res.json(boats);
+}
+exports.upload = async(req,res) => {
+    let files = req.files;
+    console.log("----***----");
+    console.log(files.length);
+    uploadToFireStore(req, res);
+}
+async function uploadToFireStore(req,res) {
+    let downloadURL ;
+    let img_download_urls = [];
+    let files = req.files;
+    let boat_id = req.params.boat_id;
+    console.log("boat_id "+boat_id);
+    for(file of files){
+        if(!file) {
+            return;
+        }
+        let ext = path.extname(file.originalname);
+        let savedFilename = new Date().getTime() + '- boat'+ ext;
+        let fileUpload = req.bucket.file('boats/'+savedFilename);
+        await fileUpload.save(new Buffer(file.buffer)).then(  
+        result => {
+            console.log("res   ",result);
+        },
+        error => {
+            console.log(error);
+        }
+        );
+        await fileUpload.getSignedUrl({
+            action: 'read',
+            expires: '03-09-2491'
+          }).then(signedUrls => {
+            downloadURL = signedUrls[0];
+            console.log("------------------");
+            console.log(downloadURL);
+            img_download_urls.push(downloadURL);
+          });
+    }
+    await db.collection('boats').doc(boat_id).get()
+    .then((doc) => {
+        let data = doc.data();
+        let imgincrement = data.imgincrement;
+        imgincrement += files.length;
+        let imgfiles = [];
+        // console.log(typeof data.imgfiles);
+        // console.log(JSON.parse(data.imgfiles))
+        imgfiles = data.imgfiles;
+        Array.prototype.push.apply(imgfiles, img_download_urls);
+        let boat = {};
+        boat.imgfiles = imgfiles;
+        boat.imgincrement = imgincrement;
+        let boatDoc = db.collection('boats').doc(boat_id);
+        boatDoc.update(boat);
+        res.json({success:true,filename:downloadURL});
+    });
 }

@@ -12,7 +12,7 @@
               <div><span>Created Date: </span>{{ad.create_at}}</div>
             </div>
             <div class="adList-buttons">
-              <button>Approve</button>
+              <button (click)="approveAd(ad)">Approve</button>
               <button>Reject</button>
               <button (click)="deleteAd(ad)"><i class = "fa fa-trash"></i></button>
             </div>

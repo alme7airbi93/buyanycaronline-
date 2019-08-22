@@ -90,9 +90,9 @@ export class CarDetailComponent implements OnInit {
       this.imgFiles = [];
       this.previewImgFile = "";
 
-      imgFiles = JSON.parse(data.imgfiles);
+      imgFiles = data.imgfiles;
       for(let i = 0; i < imgFiles.length; i++) {
-        this.imgFiles[i] = this.commonService.baseurl + "/uploads/cars/" + imgFiles[i];
+        this.imgFiles[i] = imgFiles[i];
         if(i == 0) this.previewImgFile = this.imgFiles[0];
       }
       this.features = JSON.parse(data.features);

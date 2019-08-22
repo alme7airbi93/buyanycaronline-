@@ -21,9 +21,8 @@ body {
 	border-bottom:1px solid rgba(255, 255, 255, .6) !important;
 	background:black !important;
 	color: rgba(255, 255, 255, .8) !important;
-	font: normal normal normal 16px/1 FontAwesome !important;
-	height: 16px;
-	padding: 0px !important;
+	font: normal normal normal 18px/1 FontAwesome !important;
+	padding: 6px !important;
 }
 .ba-input::placeholder {
 	color:  rgba(255, 255, 255, .8);
@@ -55,7 +54,7 @@ body {
 	background:black !important;
 	color: rgba(255, 255, 255, .8) !important;
 	font: normal normal normal 16px/1 FontAwesome !important;
-	height: 16px;
+	height: 25px;
 	padding: 0px !important;
 }
 .ad-input::placeholder {
@@ -1485,14 +1484,16 @@ footer {
     display: block;
     width: 100px;
     display: inline-block;
-    margin-left: 10px;
+	margin-left: 10px;
+	float: right;
+    margin-top: -17px;
 }
 
 #nap-container #uploadPhotoBoxItem-container{
 	width: 20%;
-    padding: 0 5px;
+    padding-top:0px;
     display: inline-block;
-    margin-top: 5px;
+    margin-top: 6px;
 }
 #nap-container .uploadPhotoBox-item {
 	border: 1px solid #2f3c40;
@@ -1703,7 +1704,7 @@ footer {
 
 #map-container #PhotoBoxItem-container{
 	width: 14.5%;
-    padding: 0 5px;
+    padding: 0 3px;
     display: inline-block;
     margin-top: 5px;
 }
@@ -2286,3 +2287,135 @@ footer {
     border: none;
     font-size: 14px;
 }
+.ads-description{
+	margin-top: -12px;
+    word-break: break-word;
+    width: 83% !important;
+    display: -webkit-box;
+    max-width: 100%;
+    height: 46px;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 1;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 4px;
+}
+.a-ads-description{
+	margin-top: -12px;
+    word-break: break-word;
+    display: -webkit-box;
+    max-width: 100%;
+    height: 46px;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 1;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 4px;
+}
+.description{
+	display: flex;
+}
+
+.photo-array {
+	overflow-x: auto;
+	overflow-y: hidden;
+	height: 130px;
+	display: flex;
+	width: 130px;
+}
+.exist-photo {
+	position: relative;
+	margin-left: 12px;
+	padding : 12px;
+	padding-left: 0px;
+	width: 100px !important;
+	height: 120px !important;
+}
+.left-exist-photo{
+	position: relative;
+    padding: 12px;
+    padding-left: 0px;
+    margin-right: 10px;
+    width: 100% !important;
+    height: 100px !important;
+}
+.lefted-close-btn{
+	width: 19px;
+    height: 20px;
+    position: relative;
+    right: -65px;
+    top: 8px;
+}
+.close {
+	position: absolute;
+}
+.close-icon {
+	width: 25px;
+    vertical-align: middle;
+    border-style: none;
+}
+div.add-Photo {
+	position: relative !important;
+	display: inline-block !important;
+	width:100px !important;
+	height: 120px !important;
+	margin-left: 12px;
+    padding-top: 12px;
+}
+div.add-Photo input[type=file]{
+	opacity: 0;
+	position: absolute;
+	left: 0;
+	top:0;
+	outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+	width: 100px;
+	height: 120px;
+}
+.add-Photo-btn{
+	background:url(../img/and-add.ico) no-repeat;
+	width: 100px;
+	height:100px;
+	background-size: contain;
+	border: none;
+}
+.close-btn{
+	width: 20px;
+	height: 20px;
+	position: absolute;
+    /* top: 20px; */
+    right: 3px;
+    top: 1px;
+}
+.preview-img{
+	border:1px white;
+	border-radius: 2px;
+	height : 100px; 
+	width: 100px;
+}
+.left-preview-img{
+	border: 1px white;
+    border-radius: 2px;
+    height: 83px;
+    width: 80px;
+}
+/* body::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+} */

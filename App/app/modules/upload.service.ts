@@ -13,7 +13,7 @@ export class UploadService {
     private commonService: CommonService) { }
 
   SERVER_URL: string = this.commonService.baseurl + "/cars/upload/";
-  
+  SERVER_URL_BOAT: string = this.commonService.baseurl+"/boats/upload/";
   public upload(car_id,data) {
     let uploadURL = `${this.SERVER_URL}`;
     
@@ -36,8 +36,23 @@ export class UploadService {
     })
     );
   }
-  public upload1(data){
-    let uploadURL = `${this.SERVER_URL}`;
-    return this.httpClient.post<any>(uploadURL, data);
+  public uploadBoatImage(boat_id,data){
+    let uploadURL = `${this.SERVER_URL_BOAT}`;
+    
+    return this.httpClient.post<any>(uploadURL + boat_id, data, {
+      reportProgress: true,
+      observe: 'events'
+    }).pipe(map((event) => {
+      switch (event.type) {
+        case HttpEventType.UploadProgress:
+          const progress = Math.round(100 * event.loaded / event.total);
+          return { status: 'progress', message: progress };
+        case HttpEventType.Response:
+          return event.body;
+        default:
+          return `Unhandled event: ${event.type}`;
+      }
+    })
+    );
   }
 }

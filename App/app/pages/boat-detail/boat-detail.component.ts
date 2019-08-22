@@ -79,8 +79,14 @@ export class BoatDetailComponent implements OnInit {
       this.boat = data;
       console.log("getBoatByid ",data);
       let imgFiles = [];
-      this.imgFiles = [];
-      this.previewImgFile = "";
+      for(let idx in data.imgfiles){
+        imgFiles[idx] = data.imgfiles[idx];
+      }
+      this.imgFiles = imgFiles;
+      if(imgFiles.length>0){
+        this.previewImgFile = imgFiles[0];
+      }
+      
     })
   }
   increaseVisitCount(ad_id : string){

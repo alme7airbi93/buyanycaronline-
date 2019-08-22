@@ -17,7 +17,7 @@ router.get('/:id', ads.findOne);
 
 // Retrieve a single Ad with id
 router.get('/userid/:user_id', ads.findAllByUserId);
-
+// router.get('/vehicle_id/:vehicle_id',ads.findOneByVehicleId);
 // Update a Ad with id
 router.put('/:id', ads.update);
 
@@ -26,6 +26,7 @@ router.put('/increase/:id', ads.increaseVisitCount);
 
 // Delete a Ad with id
 router.delete('/:id', ads.delete);
+router.post('/approve',ads.approve);
 // router.use('/billinginfos',billinginfoRoutes);
 // router.use('/cars',carRoutes);
 // router.use('/users',userRoutes);

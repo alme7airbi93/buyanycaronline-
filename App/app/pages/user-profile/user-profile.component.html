@@ -103,7 +103,7 @@
 							<div class="manageAdsItem-left">
 								<div><span>Title: </span>{{ad.title}}</div>
 								<div><span>Price: </span>{{ad.price | currency}}</div>
-								<div><span>Description: </span>{{ad.description}}</div>
+								<div class="description"><span>Description: </span><div class="ads-description">{{ad.description}}</div></div>
 							</div>
 							<div class="manageAdsItem-right">
 								<a href = "/manage-ad/{{ad.id}}">

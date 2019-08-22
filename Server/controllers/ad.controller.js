@@ -62,6 +62,11 @@ exports.findOne = async (req, res) => {
 
 };
 
+exports.findOneByVehicleId = async (req,res) => {
+    /*
+     */
+}
+
 exports.findAllByUserId = async (req, res) => {
     
     let ads = [];
@@ -132,3 +137,15 @@ exports.delete = (req, res) => {
         });
     });
 };
+exports.approve = (req,res) => {
+    console.log(req.body.id);
+    let ad_id = req.body.id;
+    db.collection('ads').doc(ad_id).get()
+    .then(ad => {
+        let adDoc = ad.data();
+        adDoc.approve = 1;
+        let ad2 = db.collection('ads').doc(ad_id);
+        ad2.update(adDoc);
+        res.send({message: "Apporve changed successfully!", status: "Success"});
+    });
+}

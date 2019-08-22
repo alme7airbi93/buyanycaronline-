@@ -5,11 +5,12 @@ const path = require('path');
 const fs = require('fs');
 //Upload a image file
 exports.upload = (req, res) => {
-    let file = req.file;
-    let ext = path.extname(file.originalname);
-    let savedFilename = new Date().getTime() + '- car'+ ext;
-    let fileUpload = req.bucket.file('cars/'+savedFilename);
-    let download_url = uploadToFireStore(req, res,file, fileUpload);
+    let files = req.files;
+    console.log("----***----");
+    console.log(files.length);
+    uploadToFireStore(req, res);
+    
+    
     
     // db.collection('cars').doc(car_id).get()
     // .then((doc) => {
@@ -42,43 +43,53 @@ exports.upload = (req, res) => {
     // });
 
 };
-async function uploadToFireStore(req,res,file, fileUpload) {
+async function uploadToFireStore(req,res) {
     let downloadURL ;
-    if(!file) {
-        return;
-      }
-      await fileUpload.save(new Buffer(file.buffer)).then(  
+    let img_download_urls = [];
+    let files = req.files;
+    let car_id = req.params.car_id;
+    for(file of files){
+        if(!file) {
+            return;
+        }
+        let ext = path.extname(file.originalname);
+        let savedFilename = new Date().getTime() + '- car'+ ext;
+        let fileUpload = req.bucket.file('cars/'+savedFilename);
+        await fileUpload.save(new Buffer(file.buffer)).then(  
         result => {
-          console.log("res   ",result);
+            console.log("res   ",result);
         },
         error => {
-          console.log(error);
+            console.log(error);
         }
-      );
-      await fileUpload.getSignedUrl({
-        action: 'read',
-        expires: '03-09-2491'
-      }).then(signedUrls => {
-        downloadURL = signedUrls[0];
-        console.log("------------------");
-        console.log(downloadURL);
-        let car_id = req.params.car_id;
-        db.collection('cars').doc(car_id).get()
-        .then((doc) => {
-            let data = doc.data();
-            let imgincrement = data.imgincrement;
-            imgincrement++;
-            let imgfiles = [];
-            imgfiles = JSON.parse(data.imgfiles);
-            imgfiles.push(downloadURL);
-            let car = {};
-            car.imgfiles = imgfiles;
-            car.imgincrement = imgincrement;
-            let carDoc = db.collection('cars').doc(car_id);
-            carDoc.update(car);
-            res.json({success:true,filename:downloadURL});
-        })
-      });
+        );
+        await fileUpload.getSignedUrl({
+            action: 'read',
+            expires: '03-09-2491'
+          }).then(signedUrls => {
+            downloadURL = signedUrls[0];
+            console.log("------------------");
+            console.log(downloadURL);
+            img_download_urls.push(downloadURL);
+          });
+    }
+    await db.collection('cars').doc(car_id).get()
+    .then((doc) => {
+        let data = doc.data();
+        let imgincrement = data.imgincrement;
+        imgincrement += files.length;
+        let imgfiles = [];
+        // console.log(typeof data.imgfiles);
+        // console.log(JSON.parse(data.imgfiles))
+        imgfiles = data.imgfiles;
+        Array.prototype.push.apply(imgfiles, img_download_urls);
+        let car = {};
+        car.imgfiles = imgfiles;
+        car.imgincrement = imgincrement;
+        let carDoc = db.collection('cars').doc(car_id);
+        carDoc.update(car);
+        res.json({success:true,filename:downloadURL});
+    });
 }
 //Create new car
 exports.create = (req, res) => {
@@ -524,34 +535,21 @@ exports.update = (req, res) => {
 exports.updateImage = (req, res) => {
                 
     let car_id = req.params.id;
-    let imgFile = req.body.imgFile;
-
-    let filename = "public/uploads/cars/" + imgFile;
-    fs.unlinkSync(filename, (err) => {
-        if (err) {
-          console.error(err);
-          return
-        }
-    });
-
+    let imgPath = req.body.imgFile;
+    console.log("index "+imgPath);
     db.collection('cars').doc(car_id).get()
     .then((doc) => {
         let car = doc.data();
-
         let imgFiles = [];
-        imgFiles = JSON.parse(car.imgfiles);
-         
-        var index = imgFiles.indexOf(imgFile);
+        imgFiles = car.imgfiles;
+        let index = imgFiles.indexOf(imgPath);
         if (index > -1) {
             imgFiles.splice(index, 1);
         }
-
-        car.imgfiles = JSON.stringify(imgFiles);
-
+        car.imgfiles = imgFiles;
         let doc2 = db.collection("cars").doc(car_id)
         doc2.update(car)
-
-        res.send({message: "Car images updated successfully!", status: "Success"});
+        res.send({message: "Car images deleted successfully!", status: "Success"});
 
     });
 

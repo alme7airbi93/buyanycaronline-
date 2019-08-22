@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { AlertsModule } from 'angular-alert-module';
 import { CarService } from './modules/car.service';
 import { CommonService } from './modules/config'
 
@@ -36,7 +36,8 @@ import { BoatDetailComponent } from './pages/boat-detail/boat-detail.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AlertsModule.forRoot(),
   ],
   providers: [
     CarService,
