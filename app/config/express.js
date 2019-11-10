@@ -13,16 +13,19 @@ module.exports = () => {
     // Configure Express to use EJS
     app.set("views", path.join(__dirname, "../views"));
     app.use(express.static(path.join(__dirname, "../public")));
-    // CORS rquests
-    app.use("/", (req, res, next) => {
-        res.header("Access-Control-Allow-Origin", "http://localhost:4200");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With,Content-Type, Accept, Authorization");
-        next();
-    });
+    if(process.env.NODE_ENV === "development")
+    {
+        // CORS rquests
+        app.use("/", (req, res, next) => {
+            res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With,Content-Type, Accept, Authorization");
+            next();
+        });
+    }
     app.set("view engine", "ejs");
     // routes
     require('../routes/index')(app);
     require('../routes/User.routes')(app);
-
+    console.log("NODE_ENV", process.env.NODE_ENV);
     return app;
 };

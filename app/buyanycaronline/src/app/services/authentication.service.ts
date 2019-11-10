@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable } from "@angular/core";
 import { BROWSER_STORAGE} from "../config/storage";
 import {User} from "../models/user";
 import {Authresponse} from "../models/authresponse";

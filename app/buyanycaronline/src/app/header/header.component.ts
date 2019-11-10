@@ -14,6 +14,8 @@ export class HeaderComponent implements OnInit {
   registerForm: FormGroup;
   invalid: boolean;
 
+
+
   constructor(private authServer: AuthenticationService, private formBuilder: FormBuilder) {
     this.currentUser = null;
     this.invalid = false;
@@ -68,7 +70,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onRegisterSubmit() {
-
+    this.authServer.register(this.loginForm.value);
   }
   get registerControls(): any {
     return this.registerForm.controls;
