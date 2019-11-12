@@ -9,7 +9,7 @@ var AddressSchema = mongoose.Schema({
     set: function(val) { return val; },
     get: function(val) { return val; }
   },
-  mobile: { type: Number, required: true,
+  mobile: { type: Number,
     set: function(val) { return val; },
     get: function(val) { return val; }
   },

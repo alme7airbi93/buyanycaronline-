@@ -1,6 +1,8 @@
 var mongoose = require('mongoose'),
+    mongoError = require('../config/mongooseErrorHandler');
     passport = require('passport');
 const User = mongoose.model('User');
+
 
 exports.register = (req, res) => {
         if (!req.body.username || !req.body.hash) {
@@ -8,13 +10,13 @@ exports.register = (req, res) => {
         }
         const user = new User();
         user.username = req.body.username;
+        user.type = req.body.type;
         user.setPassword(req.body.hash);
         console.log("username", user.username + user.salt + user.hash + user);
         user.save((err) => {
             if (err) {
-                res.status(404).json(err);
+                res.status(400).json(mongoError.getErrorMessage(err));
             } else {
-                // @ts-ignore
                 const token = user.generateJwt();
                 res.status(200).json({token});
             }
@@ -28,13 +30,14 @@ exports.login = (req, res) => {
         passport.authenticate("local", (err, user, info) => {
             let token;
             if (err) {
-                return res.status(404).json(err);
+                return res.status(400).json(mongoError.getErrorMessage(err));
             }
             if (user) {
                 token = user.generateJwt();
                 res.status(200).json({token});
             } else {
-                res.status(401).json(info);
+                let message = {message: "Incorrect username or password"};
+                res.status(401).json(message);
             }
         })(req, res);
 };

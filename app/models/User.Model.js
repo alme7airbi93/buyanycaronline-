@@ -1,21 +1,23 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    jwt = require('jsonwebtoken'),
+    crypto = require('crypto');
 var Address = require('./Address');
 
 var UserSchema = new mongoose.Schema({
-  username: { type: String, required: true,
+  username: { type: String, required: true, unique: true,
     set: function(val) { return val; },
     get: function(val) { return val; } 
   }, 
-  password: { type: String,
+  hash: { type: String, required: true,
     set: function(val) { return val; },
     get: function(val) { return val; }
   },
-  type: { type: Buffer, required: true,
+  type: { type: Number, required: true,
     set: function(val) { return val; },
     get: function(val) { return val; }
   },
   address: Address.schema,
-  hash: {type: String, required: true},
   salt: {type: String, required: true}
 }, { toJSON: { getters: true }} );
 
@@ -36,6 +38,7 @@ UserSchema.methods.generateJwt = function() {
   return jwt.sign({
         _id: this._id,
         username: this.username,
+        type: this.type,
         exp: Math.floor(Date.now() / 1000) + (60 * 60)
       }, // 1 Hour
       process.env.JWT_SECRET);

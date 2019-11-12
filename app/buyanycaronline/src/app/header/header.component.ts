@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { AuthenticationService } from "../services/authentication.service";
 import { User} from "../models/user";
+declare var $: any;
+
 
 @Component({
   selector: 'app-header',
@@ -12,15 +14,16 @@ export class HeaderComponent implements OnInit {
   currentUser: User;
   loginForm: FormGroup;
   registerForm: FormGroup;
-  invalid: boolean;
+  serverError: string;
+  alertSuccess: string;
+
 
 
 
   constructor(private authServer: AuthenticationService, private formBuilder: FormBuilder) {
     this.currentUser = null;
-    this.invalid = false;
-    this.createLoginForm();
-    this.createRegisterForm();
+    this.alertSuccess = "";
+    this.serverError = "";
   }
 
   MustMatch(controlName: string, matchingControlName: string) {
@@ -43,7 +46,7 @@ export class HeaderComponent implements OnInit {
   createLoginForm() {
     this.loginForm = this.formBuilder.group({
       username        : ['', [Validators.required, Validators.email]],
-      password        : ['', [Validators.required]]
+      hash        : ['', [Validators.required]]
     });
   }
   createRegisterForm() {
@@ -57,20 +60,44 @@ export class HeaderComponent implements OnInit {
   }
 
   onLoginSubmit() {
-    if (this.loginForm.invalid) {
-      this.invalid = true;
-      console.log('Invalid', this.invalid);
-      return;
+    if (this.loginForm.status === "VALID") {
+      this.authServer.login(this.loginForm.value).then( () => {
+        this.currentUser = this.authServer.getCurrentUser();
+        $("#loginPopup").modal("hide");
+
+      }).catch( err => {
+        console.log('Error', err.error.message);
+        this.serverError = err.error.message;
+        this.loginForm.reset("VALID");
+      });
+      console.log('Invalid', this.loginForm.status);
     }
-    this.authServer.login(this.loginForm.value).then( () => {
-      this.currentUser = this.authServer.getCurrentUser();
-    }).catch( err => {
-      console.log('Error', err);
-    });
   }
 
   onRegisterSubmit() {
-    this.authServer.register(this.loginForm.value);
+    if (this.registerForm.invalid) {
+      return;
+    }
+    if (this.registerControls.password.value === this.registerControls.confirmPassword.value) {
+      let user = {
+        username: this.registerControls.username.value,
+        hash: this.registerControls.password.value,
+        type: 2
+      };
+      this.authServer.register(user).then(() =>{
+        this.alertSuccess = " You have successfully registered your account, please proceed to login";
+        $("#successMessage").show();
+        $("#registerPopup").modal("hide");
+      }).catch( err => {
+        console.log('Error', err.error.message);
+        this.serverError = err.error.message;
+        this.loginForm.reset("VALID");
+        alert("Error :" + err );
+      });
+    }else {
+      return;
+    }
+
   }
   get registerControls(): any {
     return this.registerForm.controls;
@@ -86,5 +113,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.createLoginForm();
+    this.createRegisterForm();
+    console.log("STATUS LoginFORM", this.loginForm.status);
   }
 }

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@angular/core";
+import { Inject, Injectable } from '@angular/core';
 import { BROWSER_STORAGE} from "../config/storage";
 import {User} from "../models/user";
 import {Authresponse} from "../models/authresponse";
@@ -14,7 +14,7 @@ export class AuthenticationService {
 
   private handleError(error: any): Promise<any> {
     console.error('Something has gone wrong', error);
-    return Promise.reject(error.message || error);
+    return Promise.reject( error);
   }
   private makeAuthApiCall(urlPath: string, user: User): Promise<Authresponse> {
     const url: string = environment.apiBaseUrl + urlPath;
@@ -55,8 +55,9 @@ export class AuthenticationService {
   public getCurrentUser(): User {
     if (this.isLoggedIn()) {
       const token: string = this.getToken();
-      const { username } = JSON.parse(atob(token.split('.')[1]));
-      return { username} as User;
+      const user = JSON.parse(atob(token.split('.')[1]));
+      return user as User;
     }
   }
+
 }
