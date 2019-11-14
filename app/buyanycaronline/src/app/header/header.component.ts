@@ -1,8 +1,12 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
 import { User} from "../models/user";
 declare var $: any;
+import { environment} from "../../environments/environment.prod";
+import {ViewDataService} from "../services/view-data.service";
+
 
 
 @Component({
@@ -18,9 +22,7 @@ export class HeaderComponent implements OnInit {
   alertSuccess: string;
 
 
-
-
-  constructor(private authServer: AuthenticationService, private formBuilder: FormBuilder) {
+  constructor(private dataService:ViewDataService, private authServer: AuthenticationService, private formBuilder: FormBuilder, private router: Router) {
     this.currentUser = null;
     this.alertSuccess = "";
     this.serverError = "";
@@ -64,13 +66,14 @@ export class HeaderComponent implements OnInit {
       this.authServer.login(this.loginForm.value).then( () => {
         this.currentUser = this.authServer.getCurrentUser();
         $("#loginPopup").modal("hide");
-
+        $("#loading").modal("hide");
       }).catch( err => {
         console.log('Error', err.error.message);
-        this.serverError = err.error.message;
+        this.dataService.changeMessage(err.error.message);
         this.loginForm.reset("VALID");
+        $("#loading").modal("hide");
       });
-      console.log('Invalid', this.loginForm.status);
+      console.log('End Of Log in ', this.loginForm.status);
     }
   }
 
@@ -78,7 +81,7 @@ export class HeaderComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    if (this.registerControls.password.value === this.registerControls.confirmPassword.value) {
+    $("#registerPopup").modal("hide");
       let user = {
         username: this.registerControls.username.value,
         hash: this.registerControls.password.value,
@@ -88,16 +91,14 @@ export class HeaderComponent implements OnInit {
         this.alertSuccess = " You have successfully registered your account, please proceed to login";
         $("#successMessage").show();
         $("#registerPopup").modal("hide");
+        $("#loading").modal("hide");
       }).catch( err => {
+        $("#registerPopup").modal("show");
+        $("#loading").modal("hide");
         console.log('Error', err.error.message);
-        this.serverError = err.error.message;
-        this.loginForm.reset("VALID");
-        alert("Error :" + err );
+        this.serverError = err.error;
+        alert("Error :" + this.serverError );
       });
-    }else {
-      return;
-    }
-
   }
   get registerControls(): any {
     return this.registerForm.controls;
@@ -110,11 +111,18 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.currentUser = null;
     this.authServer.logout();
+    window.location.replace(environment.apiBaseUrl);
   }
 
   ngOnInit() {
     this.createLoginForm();
     this.createRegisterForm();
+    this.currentUser = this.authServer.getCurrentUser();
     console.log("STATUS LoginFORM", this.loginForm.status);
+    this.dataService.currentMessage.subscribe(message => this.serverError = message);
+  }
+
+  set(arg: string) {
+    this.serverError = arg;
   }
 }
