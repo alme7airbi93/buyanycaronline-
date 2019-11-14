@@ -11,7 +11,6 @@ declare var $: any;
 })
 export class IndexComponent implements OnInit {
   public flag: boolean = true;
-  // Test Command
 
   constructor(private dataService:ViewDataService, private router: Router, private authService: AuthenticationService) {}
 
