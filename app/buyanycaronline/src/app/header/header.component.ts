@@ -32,12 +32,9 @@ export class HeaderComponent implements OnInit {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
-
       if (matchingControl.errors && !matchingControl.errors.mustMatch) {
         return;
       }
-
-      // set error on matchingControl if validation fails
       if (control.value !== matchingControl.value) {
         matchingControl.setErrors({ mustMatch: true });
       } else {
@@ -114,6 +111,10 @@ export class HeaderComponent implements OnInit {
     window.location.replace(environment.apiBaseUrl);
   }
 
+  resetMessage() {
+    this.serverError = "";
+  }
+
   ngOnInit() {
     this.createLoginForm();
     this.createRegisterForm();
@@ -122,7 +123,4 @@ export class HeaderComponent implements OnInit {
     this.dataService.currentMessage.subscribe(message => this.serverError = message);
   }
 
-  set(arg: string) {
-    this.serverError = arg;
-  }
 }

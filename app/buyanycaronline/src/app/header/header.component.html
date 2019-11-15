@@ -35,7 +35,7 @@
       </div>
       <div id="header-right">
         <div *ngIf="!currentUser" id="header-authentication">
-          <button type="button" data-toggle="modal" data-target="#loginPopup">LOGIN</button>
+          <button (click)="resetMessage()" type="button" data-toggle="modal" data-target="#loginPopup">LOGIN</button>
           <span>|</span>
           <button type="button" data-toggle="modal" data-target="#registerPopup">REGISTER</button>
         </div>
@@ -48,13 +48,13 @@
             <div id="header-authentication" *ngIf="currentUser.type == 1">
               <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="monitor-page">Ad Manage</a>
-                <a class="dropdown-item" href="user-profile/{{currentUser.id}}">User Profile</a>
+                <a class="dropdown-item" routerLink="/user-profile" >User Profile</a>
                 <a class="dropdown-item" (click)="logout()">LOGOUT</a>
               </div>
             </div>
             <div id="header-authentication " *ngIf="currentUser.type == 2">
               <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="user-profile/{{currentUser.id}}">User Profile</a>
+                <a class="dropdown-item" routerLink="/user-profile">User Profile</a>
                 <a class="dropdown-item" (click)="logout()">LOGOUT</a>
               </div>
             </div>
@@ -111,10 +111,9 @@
   <div class="modal-dialog" style="max-width: 350px;">
     <div class="modal-content popup-form">
       <!-- Modal Header -->
-      <div class="modal-dialog-loader" style="display:none;"></div>
-      <div class="modal-header pf-header">
-        <h4 class="pf-title">Login</h4>
-        <button type="button" class="close pf-close" data-dismiss="modal">
+      <div class="modal-header pf-header" style="display: inline-block">
+        <h4 class="pf-title" style="display: inline-block">Login</h4>
+        <button type="button" class="close pf-close " data-dismiss="modal" style="display: inline-block">
           <i class="fa fa-times" aria-hidden="true"></i>
         </button>
       </div>

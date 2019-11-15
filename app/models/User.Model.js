@@ -39,6 +39,7 @@ UserSchema.methods.generateJwt = function() {
         _id: this._id,
         username: this.username,
         type: this.type,
+        address: this.address,
         exp: Math.floor(Date.now() / 1000) + (60 * 60)
       }, // 1 Hour
       process.env.JWT_SECRET);

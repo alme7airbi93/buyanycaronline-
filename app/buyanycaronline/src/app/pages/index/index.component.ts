@@ -22,7 +22,8 @@ export class IndexComponent implements OnInit {
     if (!this.authService.isLoggedIn()) {
       this.dataService.changeMessage("Please login first to publish an ad");
       $("#loginPopup").modal("show");
+    } else {
+      this.router.navigateByUrl("new-ad");
     }
-    this.router.navigateByUrl("new-ad");
   }
 }
