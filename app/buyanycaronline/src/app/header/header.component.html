@@ -119,7 +119,7 @@
       </div>
       <div class="pf-content">
         <p class="text-danger"> {{ serverError }}</p>
-        <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" novalidate>
+        <form [formGroup]="loginForm"  novalidate>
           <div class="form-group">
             <label class="pf-label">Email</label>
             <input type="email" formControlName="username" class="form-control pf-textInput"

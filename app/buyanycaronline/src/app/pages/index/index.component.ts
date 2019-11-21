@@ -19,11 +19,11 @@ export class IndexComponent implements OnInit {
   }
 
   onPlaceAd() {
-    if (!this.authService.isLoggedIn()) {
-      this.dataService.changeMessage("Please login first to publish an ad");
-      $("#loginPopup").modal("show");
-    } else {
-      this.router.navigateByUrl("new-ad");
-    }
+    // if (!this.authService.isLoggedIn()) {
+    //   this.dataService.changeMessage("Please login first to publish an ad");
+    //   $("#loginPopup").modal("show");
+    // } else {
+    //   this.router.navigateByUrl("new-ad");
+    // }
   }
 }

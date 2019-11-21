@@ -41,3 +41,82 @@ exports.login = (req, res) => {
             }
         })(req, res);
 };
+
+exports.update = (req,res) => {
+    var role = req.type;
+    var userId = req.userId;
+    if (role === 0){
+        User.findById(req.params.id, function(err, user) {
+            if (!user)
+                res.status(404).send("data is not found");
+            else
+                Object.assign(user, req.body);
+            user.setPassword(req.body.hash);
+            user.save().then(user => {
+                res.json('user updated!');
+            })
+                .catch(err => {
+                    res.status(400).send("Update not possible");
+                });
+        });
+    }
+    else{
+        if (userId === req.params.id){
+            User.findById(req.params.id, function(err, user) {
+                if (!user)
+                    res.status(404).send("data is not found");
+                else
+                    Object.assign(user, req.body);
+                user.setPassword(req.body.hash);
+                user.save().then(user => {
+                    res.json('user updated!');
+                })
+                    .catch(err => {
+                        res.status(400).send("Update not possible");
+                    });
+            });
+        }
+        else {
+            res.json('You are not owner of this profile. So you cannot update');
+        }
+    }
+};
+
+exports.delete = (req,res) => {
+    var userId = req.userId;
+    var role = req.type;
+    if (role === 0){
+        User.findByIdAndRemove({_id: req.params.id}, function(err, business){
+            if(err) res.json(err);
+            else res.json('Successfully removed');
+        });
+    }
+    else if(role === 2){
+        if(userId === req.params.id){
+            User.findByIdAndRemove({_id: req.params.id}, function(err, business){
+                if(err) res.json(err);
+                else res.json('Successfully removed');
+            });
+        }
+        else {
+            res.json('You are not owner of this profile. You are not permited');
+        }
+    }
+    else{
+        res.json('you are not permited , cannot delete !');
+    }
+};
+exports.findById = (req,res) => {
+    var role = req.type;
+    if (role === 0){
+        User.findById(req.params.id, function(err, user) {
+            if (!user)
+                res.status(500).send("data is not found");
+            else
+                res.status(200).json(user);
+        });
+    }
+    else{
+        res.json('you are not admin , cannot access !');
+    }
+};

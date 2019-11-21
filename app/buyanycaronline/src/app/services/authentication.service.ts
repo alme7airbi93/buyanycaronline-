@@ -56,7 +56,7 @@ export class AuthenticationService {
     if (this.isLoggedIn()) {
       const token: string = this.getToken();
       const user = JSON.parse(atob(token.split('.')[1]));
-      return user as User;
+      return new User(user);
     }
   }
 

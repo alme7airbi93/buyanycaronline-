@@ -26,6 +26,11 @@ module.exports = () => {
     // routes
     require('../routes/index')(app);
     require('../routes/User.routes')(app);
+    require('../routes/Make.routes')(app);
+    require('../routes/Model.routes')(app);
+    require('../routes/Ticket.routes')(app);
+    require('../routes/Ad.routes')(app);
+
     console.log("NODE_ENV", process.env.NODE_ENV);
     return app;
 };

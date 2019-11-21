@@ -15,6 +15,7 @@ import { ManageAdComponent } from './pages/manage-ad/manage-ad.component';
 import { MonitorPageComponent } from './pages/monitor-page/monitor-page.component';
 import { NewAdComponent } from './pages/new-ad/new-ad.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
     ManageAdComponent,
     MonitorPageComponent,
     NewAdComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,

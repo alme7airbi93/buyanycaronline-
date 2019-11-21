@@ -6,10 +6,7 @@ var CarSchema = require('./Car');
 var HeavyVehicleSchema = require('./HeavyVehicle');
 var MotorcycleSchema = require('./Motorcycle');
 
-// Schema for Ads collection
-// Discriminator key allows one of 'NumberPlates, 'Vehicles' or a vehicle sub-type, i.e. 'Boats', 'Cars', 'HeavyVehicle' or 'Motorcycle'
-// Specifying 'Vehicle' in discriminatorKey will extend ad schema to include shared vehicle fields among all vehicle sub-types, but not any fields for any sub-types.
-// Specifying a sub-type, ie.'Boats', 'Cars', 'HeavyVehicle' or 'Motorcycle' in discriminationKey will extend ad schema to include all the shared vehicle fields and the fields in specified sub-type.
+
 
 var AdSchema = new mongoose.Schema({
   title: {type: String, required: true,
@@ -21,15 +18,13 @@ var AdSchema = new mongoose.Schema({
     get: function(val) { return val; }
   },
   price: { type: Number, required: true,
-    set: function(val) { 
-      // val in setter is type of string.  If using '+', val will get appeneded as a string.  
-      // Use Number(val) to convert value first.  Other math functions seem fine.
+    set: function(val) {
       return val; 
     },
     get: function(val) { return val; }
   },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
-  status: Buffer, 
+  status: {type: Boolean},
 },  {discriminatorKey: 'type', toJSON: { getters: true }});
 
 var AdModel = mongoose.model('Ad', AdSchema);
